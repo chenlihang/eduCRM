@@ -6,7 +6,7 @@ import cn.wolfcode.crm.query.EmployeeQueryObject;
 import cn.wolfcode.crm.service.IDepartmentService;
 import cn.wolfcode.crm.service.IEmployeeService;
 import cn.wolfcode.crm.util.JsonResult;
-import cn.wolfcode.crm.util.PageResult;
+import cn.wolfcode.crm.util.PageResults;
 import cn.wolfcode.crm.util.PermissionName;
 import jxl.CellType;
 import jxl.DateCell;
@@ -39,13 +39,13 @@ public class EmployeeController {
     @RequiresPermissions("employee:view")
     @PermissionName("员工列表")
     public String view(Model model, @ModelAttribute("qo")EmployeeQueryObject qo) {
-        model.addAttribute("employees", employeeService.query(qo));
+        model.addAttribute("result", employeeService.query(qo));
         return "employee/view";
     }
 
     @RequestMapping("query")
     @ResponseBody
-    public PageResult query(EmployeeQueryObject qo) {
+    public PageResults query(EmployeeQueryObject qo) {
         return employeeService.query(qo);
     }
 
