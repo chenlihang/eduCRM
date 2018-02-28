@@ -29,6 +29,6 @@ public class LoginController {
     public String main(Model model){
         List <SystemMenu> systemMenus = systemMenuService.loadMenu();
         model.addAttribute("menus", systemMenus);
-        return "main2";
+        return "main";
     }
 }
