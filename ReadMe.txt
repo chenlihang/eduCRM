@@ -6,3 +6,6 @@ bijun
 陈方明
 zhihang
 bj2
+熊刚
+嘻嘻
+正方明
