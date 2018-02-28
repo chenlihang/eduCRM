@@ -2,9 +2,9 @@ package cn.wolfcode.crm.service.impl;
 
 import cn.wolfcode.crm.domain.Employee;
 import cn.wolfcode.crm.mapper.EmployeeMapper;
-import cn.wolfcode.crm.query.QueryObject;
+import cn.wolfcode.crm.query.QueryObjects;
 import cn.wolfcode.crm.service.IEmployeeService;
-import cn.wolfcode.crm.util.PageResult;
+import cn.wolfcode.crm.util.PageResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,14 +54,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public PageResult query(QueryObject qo) {
+    public PageResults query(QueryObjects qo) {
         int count = mapper.queryCount(qo);
         if (count == 0) {
-            return PageResult.EMPTY_RESULT;
+            return PageResults.EMPTY_PAGE;
         }
         List <Employee> list = mapper.queryList(qo);
-        return new PageResult(count, list);
+        return new PageResults(qo.getCurrentPage(), qo.getPageSize(), mapper.queryList(qo), count);
     }
+
 
     @Override
     public void updateState(Long id) {

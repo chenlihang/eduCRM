@@ -1,9 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script type="text/javascript" src="/static/plugins/bootstarp/js/jquery.min.js"></script>
-<script src="/static/plugins/bootstarp/js/bootstrap/bootstrap.min.js"></script>
-<script type="text/javascript" src="/static/plugins/bootstarp/js/plugins.js"></script>
-
-
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <div class="panel-body" style="float: right">
     <nav>
         <ul class="pagination">

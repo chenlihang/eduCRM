@@ -1,8 +1,8 @@
 package cn.wolfcode.crm.service;
 
 import cn.wolfcode.crm.domain.Employee;
-import cn.wolfcode.crm.query.QueryObject;
-import cn.wolfcode.crm.util.PageResult;
+import cn.wolfcode.crm.query.QueryObjects;
+import cn.wolfcode.crm.util.PageResults;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface IEmployeeService {
 
     int updateByPrimaryKey(Employee entity);
 
-    PageResult query(QueryObject qo);
+    PageResults query(QueryObjects qo);
 
     void updateState(Long id);
 }
