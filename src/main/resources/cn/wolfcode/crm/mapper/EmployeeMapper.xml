@@ -68,7 +68,7 @@
         select e.id, e.username, e.realname, e.tel, e.email, d.id d_id,d.name d_name, e.inputTime, e.state, e.admin
         from employee e left join department d on e.dept_id=d.id
         <include refid="base_where"/>
-        limit #{startIndex},#{rows}
+        limit #{start},#{pageSize}
     </select>
     <select id="selectByUsername" resultType="employee">
       select * from employee where username=#{username}

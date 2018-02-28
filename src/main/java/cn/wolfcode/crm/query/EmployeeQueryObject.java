@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Getter@Setter
-public class EmployeeQueryObject extends QueryObject {
+public class EmployeeQueryObject extends QueryObjects {
     private String keyword;
     private Long deptId;
     private Boolean state;
