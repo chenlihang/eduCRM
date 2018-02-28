@@ -1,23 +1,17 @@
-package cn.wolfcode.crm.mapper;
+package cn.wolfcode.crm.service;
 
 import cn.wolfcode.crm.domain.Customer;
 import cn.wolfcode.crm.query.QueryObjects;
+import cn.wolfcode.crm.util.PageResults;
 
 import java.util.List;
 
-/**
- * 客户Mapper借口类
- * @author cfm
- * @date 2018-02-28
- */
-public interface CustomerMapper {
-    /**
-     * @param id
-     * @return
-     */
+public interface ICustomerService {
     int deleteByPrimaryKey(Long id);
 
     int insert(Customer entity);
+
+    int saveOrUpdate(Customer entity);
 
     Customer selectByPrimaryKey(Long id);
 
@@ -25,7 +19,6 @@ public interface CustomerMapper {
 
     int updateByPrimaryKey(Customer entity);
 
-    int queryCount(QueryObjects qo);
+    PageResults query(QueryObjects qo);
 
-    List<Customer> queryList(QueryObjects qo);
 }
