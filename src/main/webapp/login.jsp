@@ -51,11 +51,11 @@
         <div class="form-area">
             <span id="login_err"></span>
             <div class="group">
-                <input name="username" type="text" class="form-control" placeholder="账户名">
+                <input name="username" type="text" class="form-control" placeholder="账户名" value="admin">
                 <i class="fa fa-user"></i>
             </div>
             <div class="group">
-                <input name="password" type="password" class="form-control" placeholder="密码">
+                <input name="password" type="password" class="form-control" placeholder="密码" value="1">
                 <i class="fa fa-key"></i>
             </div>
             <div class="checkbox checkbox-primary">
