@@ -23,6 +23,7 @@ public class Employee extends BaseDomain {
     private Boolean state =true;//true在职
     private Boolean admin;
     private Department dept;
+    private String imagePath;
 
     private List<Role> roles = new ArrayList<>();
 }
