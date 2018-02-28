@@ -14,7 +14,7 @@ $(function () {
                 {field:'sn',title:'部门编码', width:100},
                 {field:'name',title:'部门名称', width:100},
                 {field:'manager',title:'部门经理', width:100,formatter:function (value,row,index) {
-                        return value?value.name:"";
+                        return value?value.realname:"";
                     }},
                 {field:'parent',title:'上级部门', width:100,formatter:function (value,row,index) {
                         return value?value.name:"";
@@ -53,4 +53,47 @@ function edit() {
 }
 function reload() {
     $("#dept_datagrid").datagrid('reload');
+}
+function remove() {
+    var row = $("#dept_datagrid").datagrid('getSelected');
+    if (!row) {
+        $.messager.alert("温馨提示","请选中一条数据","warning");
+        return;
+    }
+    $.messager.confirm("确认对话框","您要解散该部门吗",function (r) {
+        if (r) {
+            $.get('/department/delete.do',{id:row.id},function (data) {
+                if (data.success) {
+                    $.messager.alert("温馨提示","解散成功",'info',function () {
+                        //关闭弹出框然后刷新
+                        $("#dept_dialog").dialog('close');
+                        $("#dept_datagrid").datagrid('reload');
+                    });
+                }else{
+                    $.messager.alert("温馨提示","解散失败",'error');
+                }
+            },'json');
+        }
+    });
+}
+
+function save() {
+    $("#dept_form").form('submit',{
+        url:'/department/saveOrUpdate.do',
+        success:function (data) {
+            data = $.parseJSON(data);
+            if (data.success) {
+                $.messager.alert("温馨提示","保存成功",'info',function () {
+                    $("#dept_dialog").dialog('close');
+                    $("#dept_datagrid").datagrid('reload');
+                });
+            }else{
+                $.messager.alert("温馨提示","保存失败","error");
+            }
+        }
+    });
+}
+
+function cancel() {
+    $("#dept_dialog").dialog('close');
 }
