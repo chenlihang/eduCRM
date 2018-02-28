@@ -1,7 +1,9 @@
 package cn.wolfcode.crm.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 /**
@@ -69,6 +71,8 @@ public class Customer extends BaseDomain {
     /**
      * 大学毕业时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date graduateTime;
 
     /**
@@ -89,6 +93,8 @@ public class Customer extends BaseDomain {
     /**
      * 录入时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inputTime;
 
     /**
@@ -139,6 +145,8 @@ public class Customer extends BaseDomain {
     /**
      * 下次跟进日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date nextFollowDate;
 
     /**
