@@ -2,6 +2,7 @@ package cn.wolfcode.crm.web.controller;
 
 import cn.wolfcode.crm.domain.Department;
 import cn.wolfcode.crm.service.IDepartmentService;
+import cn.wolfcode.crm.service.IEmployeeService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PermissionName;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,6 +18,8 @@ import java.util.List;
 public class DepartmentController {
     @Autowired
     private IDepartmentService departmentService;
+    @Autowired
+    private IEmployeeService employeeService;
 
     @RequestMapping("view")
     @RequiresPermissions("department:view")
@@ -25,15 +28,22 @@ public class DepartmentController {
         return "department/view";
     }
 
-    @RequestMapping("listAll")
+    @RequestMapping("query")
     @ResponseBody
-    public List<Department> list(){
+    public List<Department> query(){
         return departmentService.selectAll();
     }
 
     @RequestMapping("saveOrUpdate")
     @ResponseBody
     public JsonResult saveOrUpdate(Department department){
-        return new JsonResult();
+        JsonResult result = new JsonResult();
+        try {
+            departmentService.saveOrUpdate(department);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return result.setErrorMsg("操作失败");
+        }
     }
 }

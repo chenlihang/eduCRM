@@ -3,7 +3,6 @@ package cn.wolfcode.crm.web.controller;
 import cn.wolfcode.crm.domain.Customer;
 import cn.wolfcode.crm.query.CustomerQueryObject;
 import cn.wolfcode.crm.service.ICustomerService;
-import cn.wolfcode.crm.service.IDepartmentService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PermissionName;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
-    @Autowired
-    private IDepartmentService departmentService;
 
     @RequestMapping("view")
     @RequiresPermissions("customer:view")
@@ -32,9 +29,9 @@ public class CustomerController {
 
     @RequestMapping("saveOrUpdate")
     @ResponseBody
-    public JsonResult saveOrUpdate(Customer customer) {
+    public JsonResult saveOrUpdate(Customer entity) {
         try {
-            customerService.saveOrUpdate(customer);
+           int i= customerService.saveOrUpdate(entity);
         } catch (Exception e) {
             e.printStackTrace();
             return new JsonResult().setErrorMsg("保存失败");

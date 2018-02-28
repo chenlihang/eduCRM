@@ -12,73 +12,43 @@
 
     <!-- ========== Css Files ========== -->
     <link href="/css/root.css" rel="stylesheet">
-    <%@include file="/WEB-INF/views/common/plugins.jsp" %>
+    <%@include file="../common/plugins.jsp"%>
 
+    <script>
+        $(function () {
+            $("#customerSubmit").click(function () {
+
+                $("#editForm").ajaxSubmit(function (data) {
+                   if(data.success){
+                       showDialog("操作成功",function () {
+                           window.location.href="/customer/view.do";
+                       })
+                   }
+                })
+            });
+        });
+    </script>
 </head>
 <body class="panel panel-default">
 <!-- 模态框（Modal） -->
 <div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" style="height: 500px;width: 500px;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    新增员工信息
-                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">×</font></font></span></button>
+                <h4 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">潜在客户编辑</font></font></h4>
             </div>
-            <div class="modal-body" style="width: auto">
-                <%--表格开始--%>
-                <form action="/customer/saveOrUpdate.do" method="post">
-                    <table>
-                        <tr style="padding-bottom: 5px">
-                            <td>
-                                姓名：
-                            </td>
-                            <td>
-                                <input name="name" type="text">
-                            </td>
-                            <td>
-                                姓名：
-                            </td>
-                            <td>
-                                <input name="name" type="text">
-                            </td> <td>
-                                姓名：
-                            </td>
-                            <td>
-                                <input name="name" type="text">
-                            </td> <td>
-                                姓名：
-                            </td>
-                            <td>
-                                <input name="name" type="text">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                姓名：
-                            </td>
-                            <td>
-                                <input name="name" type="text">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-                <%--表格结束--%>
-            </div>
+            <div class="modal-body" style="text-align:center"><font style="vertical-align: inherit; text-align: center"><font style="vertical-align: inherit;">
+                <%@include file="input.jsp"%>
+            </font></font></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default">
-                    提交更改
-                </button>
-                <button type="button" class="btn btn-white" data-dismiss="modal">关闭
-                </button>
+                <button type="button" class="btn btn-white" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关闭</font></font></button>
+                <button type="button" class="btn btn-default"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;" id="customerSubmit">保存更改</font></font></button>
             </div>
-        </div><!-- /.modal-content -->
+        </div>
     </div><!-- /.modal -->
 </div>
-<form id="searchForm" action="/employee/view.do" method="post">
+<form id="searchForm" action="/customer/view.do" method="post">
     <div>
         <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>新增</a>
         <a href="#" class="btn btn-default"><i class="fa fa-edit"></i>编辑</a>
