@@ -17,7 +17,7 @@
         $(function () {
             $(".menu_children").click(function () {
                 var href = $(this).data("href");
-
+                $("#iframe_content").attr("src", href);
             });
         })
     </script>
@@ -115,8 +115,7 @@
                     class="caret"></span></a>
                 <ul>
                     <c:forEach items="${menu.children}" var="child">
-                        <li><a class="menu_children" href="/employee/list.do"
-                               data-href="${child.href}">${child.name}</a></li>
+                        <li><a href="#" class="menu_children" data-href="${child.href}">${child.name}</a></li>
                     </c:forEach>
                 </ul>
             </li>
@@ -141,7 +140,7 @@
     </div>
 
     <div class="container-widget">
-        <iframe src="/employee/view.do" style="width: 100%;height: 1000px;border: 0px"/>
+        <iframe id="iframe_content" src="" style="width: 100%;height: 1000px;border: 0px"/>
     </div>
 
     <!-- Start Footer -->

@@ -1,7 +1,7 @@
 package cn.wolfcode.crm.mapper;
 
 import cn.wolfcode.crm.domain.Employee;
-import cn.wolfcode.crm.query.QueryObject;
+import cn.wolfcode.crm.query.QueryObjects;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,9 +17,9 @@ public interface EmployeeMapper {
 
     int updateByPrimaryKey(Employee entity);
 
-    int queryCount(QueryObject qo);
+    int queryCount(QueryObjects qo);
 
-    List<Employee> queryList(QueryObject qo);
+    List<Employee> queryList(QueryObjects qo);
 
     void updateState(Long id);
 
