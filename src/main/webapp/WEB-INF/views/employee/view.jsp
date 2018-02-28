@@ -85,7 +85,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <jsp:include page="/WEB-INF/views/common/common_page.jsp"/>
+    <jsp:include page="/WEB-INF/views/common/page.jsp"/>
 </div>
 </body>
 </html>
