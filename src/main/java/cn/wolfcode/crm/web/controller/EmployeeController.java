@@ -17,6 +17,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,18 +38,11 @@ public class EmployeeController {
     @RequestMapping("view")
     @RequiresPermissions("employee:view")
     @PermissionName("员工列表")
-    public String view(Model model) {
-        model.addAttribute("url", "/employee/view.do");
-        model.addAttribute("employees", employeeService.selectAll());
+    public String view(Model model, @ModelAttribute("qo")EmployeeQueryObject qo) {
+        model.addAttribute("employees", employeeService.query(qo));
         return "employee/view";
     }
 
-    @RequestMapping("list")
-    @ResponseBody
-    public void list(Model model) {
-        model.addAttribute("url", "/employee/view.do");
-
-    }
     @RequestMapping("query")
     @ResponseBody
     public PageResult query(EmployeeQueryObject qo) {
