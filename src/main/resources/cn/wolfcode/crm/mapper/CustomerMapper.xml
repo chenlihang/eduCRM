@@ -95,4 +95,18 @@
     state, computer, nextFollowDate, concern, remark
     from customer
   </select>
+
+
+
+  <select id="queryCount" resultType="int">
+    select count(id) from customer
+  </select>
+  <select id="queryList" resultMap="BaseResultMap">
+     select id, name, weChat, QQ, tel, age, gender, email, province, diplomas, major,
+    school, graduateTime, workSeniority, inputUser_id, salesman_id, inputTime, source,
+    collegeClient, clientType, intentionCampus, intentionSubject, intentionClass, intentionExtent,
+    state, computer, nextFollowDate, concern, remark
+    from customer
+    limit #{start},#{pageSize}
+  </select>
 </mapper>
