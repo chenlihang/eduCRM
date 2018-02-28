@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.crm.mapper.KeyaccountMapper">
+  <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.Keyaccount">
+    <id column="id"   property="id" />
+    <result column="name"  property="name" />
+    <result column="address"  property="address" />
+    <result column="prevTranceTime"   property="prevTranceTime" />
+    <result column="nextTranceTime"   property="nextTranceTime" />
+    <result column="traceState" property="traceState" />
+    <result column="schoolTel"   property="schoolTel" />
+    <result column="customerStatus" property="customerStatus" />
+    <result column="email"  property="email" />
+    <result column="stuNumber"   property="stuNumber" />
+    <result column="itstuNumber"   property="itstuNumber" />
+    <result column="telegraph"  property="telegraph" />
+    <result column="postcode"  property="postcode" />
+    <result column="teacherNumber"  property="teacherNumber" />
+    <result column="remark"  property="remark" />
+    <result column="introduction"  property="introduction" />
+    <result column="cooperation" property="cooperation" />
+    <association columnPrefix="importance_" javaType="dataDictionaryItem" property="importance" >
+      <id column="id" property="id"></id>
+      <result column="name" property="name"></result>
+
+    </association>
+    <association columnPrefix="intention_"  javaType="dataDictionaryItem"   property="intentionLevel" >
+      <id column="id" property="id"></id>
+      <result column="name" property="name"></result>
+    </association>
+    <association columnPrefix="subject_"  javaType="dataDictionaryItem" property="subject" >
+      <id column="id" property="id"></id>
+      <result column="name" property="name"></result>
+    </association>
+    <association columnPrefix="college_"  javaType="dataDictionaryItem"  property="college" >
+      <id column="id" property="id"></id>
+      <result column="name" property="name"></result>
+    </association>
+    <!--<result column="contact_id"   property="contact" />-->
+    <association columnPrefix="marketer_"   javaType="employee"  property="marketer" >
+      <id column="id" property="id"></id>
+      <result column="name" property="realname"></result>
+    </association>
+    <association columnPrefix="tracer_"  javaType="employee"   property="tracer" >
+      <id column="id" property="id"></id>
+      <result column="name" property="realname"></result>
+    </association>
+
+    <association columnPrefix="type_"   javaType="dataDictionaryItem"  property="type" >
+      <id column="id" property="id"></id>
+      <result column="name" property="name"></result>
+    </association>
+    <association columnPrefix="educate_"  javaType="dataDictionaryItem"  property="educate" >
+      <id column="id" property="id"></id>
+      <result column="name" property="name"></result>
+    </association>
+  </resultMap>
+  <sql id="base_column">
+     select k.id, k.name, k.address,
+     k.importance_id ,importance.name  importance_name,
+    k.intentionLevel_id intention_id,intention.name  intention_name,
+     k.subject_id,subject.name  subject_name,
+     k.college_id,college.name college_name,
+    k.contact_id,contact.name contact_name,
+    k.marketer_id,macketer.name macketer_name,
+    k.tracer_id,tracer.name tracer_name,
+    k.prevTranceTime, k.nextTranceTime, k.traceState, k.schoolTel,
+    k.customerStatus
+
+
+  </sql>
+  <sql id="base_table">
+    from keyaccount k
+    left JOIN  dictionaryitem importance ON k.importance_id=importance.id
+    left JOIN  dictionaryitem intention ON k.intentionLevel_id=intention.id
+    left JOIN  dictionaryitem subject ON k.subject_id=subject.id
+    left JOIN  dictionaryitem college ON k.college_id=college.id
+    left join  contact on k.contact_id=contact.id
+    left join  employee marketer on k.marketer_id=marketer.id
+
+
+  </sql>
+  <sql id="base_where">
+
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from keyaccount
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.wolfcode.crm.domain.Keyaccount" useGeneratedKeys="true">
+    insert into keyaccount (name, address, importance_id, 
+      intentionLevel_id, subject_id, college_id, 
+      contact_id, marketer_id, tracer_id, 
+      prevTranceTime, nextTranceTime, traceState, 
+      schoolTel, customerStatus, email, 
+      stuNumber, itstuNumber, type_id, 
+      educate_id, telegraph, postcode, 
+      teacherNumber, remark, introduction, 
+      cooperation)
+    values (#{name}, #{address}, #{importance.id},
+      #{intentionLevel.id}, #{subject.id}, #{college.id},
+      #{contact.id,jdbcType=BIGINT}, #{marketer.id,jdbcType=BIGINT}, #{tracer.id,jdbcType=BIGINT},
+      #{prevTranceTime,jdbcType=TIMESTAMP}, #{nextTranceTime,jdbcType=TIMESTAMP}, #{traceState,jdbcType=BIT},
+      #{schoolTel,jdbcType=BIGINT}, #{customerStatus,jdbcType=BIT}, #{email},
+      #{stuNumber,jdbcType=BIGINT}, #{itstuNumber,jdbcType=BIGINT}, #{type.id,jdbcType=BIGINT},
+      #{educate.id}, #{telegraph}, #{postcode},
+      #{teacherNumber}, #{remark}, #{introduction},
+      #{cooperation,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.wolfcode.crm.domain.Keyaccount">
+    update keyaccount
+    set name = #{name},
+      address = #{address},
+      importance_id = #{importance.id},
+      intentionLevel_id = #{intentionLevel.id},
+      subject_id = #{subject.id},
+      college_id = #{college.id},
+      contact_id = #{contact.id,jdbcType=BIGINT},
+      marketer_id = #{marketer.id,jdbcType=BIGINT},
+      tracer_id = #{tracer.id,jdbcType=BIGINT},
+      prevTranceTime = #{prevTranceTime,jdbcType=TIMESTAMP},
+      nextTranceTime = #{nextTranceTime,jdbcType=TIMESTAMP},
+      traceState = #{traceState,jdbcType=BIT},
+      schoolTel = #{schoolTel,jdbcType=BIGINT},
+      customerStatus = #{customerStatus,jdbcType=BIT},
+      email = #{email},
+      stuNumber = #{stuNumber,jdbcType=BIGINT},
+      itstuNumber = #{itstuNumber,jdbcType=BIGINT},
+      type_id = #{type.id,jdbcType=BIGINT},
+      educate_id = #{educate.id},
+      telegraph = #{telegraph},
+      postcode = #{postcode},
+      teacherNumber = #{teacherNumber},
+      remark = #{remark},
+      introduction = #{introduction},
+      cooperation = #{cooperation,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <include refid="base_column"></include>
+    ,
+    k. email, k.stuNumber, k.itstuNumber,
+    k.type_id,`type`.name type_name,
+    k.educate_id,educate.name educate_name ,
+    k.telegraph, k.postcode,
+    k.teacherNumber, k.remark, k.introduction, k.cooperation
+    <include refid="base_table"></include>
+    left join  employee tracer on k.market_id=tracer.id
+    left JOIN  dictionaryitem `type` ON k.type_id=`type`.id
+    left JOIN  dictionaryitem educate ON k.educate_id=educate.id
+    <include refid="base_where"></include>
+    where k.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, address, importance_id, intentionLevel_id, subject_id, college_id, 
+    contact_id, marketer_id, tracer_id, prevTranceTime, nextTranceTime, traceState, schoolTel, 
+    customerStatus, email, stuNumber, itstuNumber, type_id, educate_id, telegraph, postcode, 
+    teacherNumber, remark, introduction, cooperation
+    from keyaccount
+  </select>
+    <select id="queryCount" resultType="int" >
+    SELECT count(k.id)
+      <include refid="base_table"></include>
+      <include refid="base_where"></include>
+
+    </select>
+  <select id="queryList" resultMap="BaseResultMap" >
+    <include refid="base_column"></include>
+    <include refid="base_table"></include>
+    <include refid="base_where"></include>
+    limit #{start},#{pageSize}
+
+  </select>
+</mapper>
