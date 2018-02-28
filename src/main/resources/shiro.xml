@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        ">
+
+    <bean class="org.apache.shiro.cache.ehcache.EhCacheManager" id="cacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
+    </bean>
+
+   <!-- <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        &lt;!&ndash;<property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="2"/>&ndash;&gt;
+    </bean>-->
+
+    <bean id="myRealm" class="cn.wolfcode.crm.realm.MyRealm">
+       <!-- <property name="credentialsMatcher" ref="credentialsMatcher"/>-->
+    </bean>
+
+    <bean id="myFormAuthenticationFilter" class="cn.wolfcode.crm.web.filter.MyFormAuthenticationFilter"></bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realms" ref="myRealm"/>
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login.do"/>
+        <property name="successUrl" value="/main.do"/>
+        <property name="FilterChainDefinitions">
+            <value>
+                /css/**=anon
+                /fonts/**=anon
+                /html/**=anon
+                /img/**=anon
+                /js/**=anon
+                /upload/**=anon
+                /login.jsp=anon
+                /logout.do=logout
+                /**=authc
+            </value>
+        </property>
+        <property name="filters" >
+            <map>
+                <entry key="authc" value-ref="myFormAuthenticationFilter"/>
+            </map>
+        </property>
+    </bean>
+
+
+
+</beans>

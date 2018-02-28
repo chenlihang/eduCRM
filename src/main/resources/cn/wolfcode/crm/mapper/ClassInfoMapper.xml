@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.crm.mapper.ClassInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.ClassInfo">
+    <id column="id" property="id" />
+    <result column="title" property="title" />
+    <result column="inputTime" property="inputTime" />
+    <result column="state" property="state" />
+    <association property="teacher" javaType="employee" columnPrefix="t_">
+      <id column="id" property="id" />
+      <result column="realname" property="realname" />
+    </association>
+  </resultMap>
+  <delete id="deleteByPrimaryKey">
+    delete from classinfo
+    where id = #{id}
+  </delete>
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    insert into classinfo (title, inputTime, state, teacher_id)
+    values (#{title}, #{inputTime}, #{state}, #{teacher.id})
+  </insert>
+  <update id="updateByPrimaryKey">
+    update classinfo
+    set title = #{title},
+      inputTime = #{inputTime},
+      state = #{state},
+      teacher_id = #{teacher.id}
+    where id = #{id}
+  </update>
+  <update id="updateState">
+    update classinfo set state=state^1 where id=#{id}
+  </update>
+
+  <sql id="baseColumn">
+    select c.id, c.title, c.inputTime, c.state,t.id t_id,t.realname t_realname
+  </sql>
+
+  <sql id="baseTable">
+    from classinfo c left join employee t on c.teacher_id=t.id
+  </sql>
+
+  <sql id="baseWhere">
+    <where>
+      <if test="keyword != null and keyword != ''">
+        and (c.title like concat('%',#{keyword},'%') or t.realname like concat('%',#{keyword},'%'))
+      </if>
+      <if test="beginDate != null">
+        and c.inputTime &gt;= #{beginDate}
+      </if>
+      <if test="endDate != null">
+        and c.inputTime &lt;= #{endDate}
+      </if>
+      <if test="state != null">
+        and c.state = #{state}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+   <include refid="baseColumn"/>
+   <include refid="baseTable"/>
+    where c.id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    <include refid="baseColumn"/>
+    <include refid="baseTable"/>
+  </select>
+
+  <select id="queryCount" resultType="int">
+    select count(c.id)
+    <include refid="baseTable"/>
+    <include refid="baseWhere"/>
+  </select>
+  <select id="queryList" resultMap="BaseResultMap">
+    <include refid="baseColumn"/>
+    <include refid="baseTable"/>
+    <include refid="baseWhere"/>
+    limit #{startIndex},#{rows}
+  </select>
+
+</mapper>

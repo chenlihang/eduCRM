@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.crm.mapper.EmployeeMapper">
+    <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.Employee">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="realname" property="realname"/>
+        <result column="password" property="password"/>
+        <result column="tel" property="tel"/>
+        <result column="email" property="email"/>
+        <result column="inputTime" property="inputTime"/>
+        <result column="state" property="state"/>
+        <result column="admin" property="admin"/>
+        <association property="dept" javaType="Department" columnPrefix="d_">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+    <delete id="deleteByPrimaryKey">
+    delete from employee
+    where id = #{id}
+  </delete>
+    <delete id="deleteRoleRelation">
+    delete from employee_role where employee_id=#{id}
+  </delete>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    insert into employee (username, realname, password, tel, email, dept_id, inputTime, 
+      state, admin)
+    values (#{username}, #{realname}, #{password}, #{tel}, #{email}, #{dept.id}, #{inputTime},
+      #{state}, #{admin})
+  </insert>
+    <insert id="insertRoleRelation">
+        insert into employee_role (employee_id,role_id) values
+        <foreach collection="roles" item="ele" separator=",">
+            (#{employeeId},#{ele.id})
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKey">
+    update employee
+    set username = #{username},
+      realname = #{realname},
+      tel = #{tel},
+      email = #{email},
+      dept_id = #{dept.id},
+      inputTime = #{inputTime},
+      state = #{state},
+      admin = #{admin}
+    where id = #{id}
+  </update>
+    <update id="updateState">
+      update employee set state=state^1 where id=#{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+   select e.id, e.username, e.realname, e.tel, e.email, d.id d_id,d.name d_name, e.inputTime, e.state, e.admin
+    from employee e left join department d on e.dept_id=d.id
+    where e.id = #{id}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select e.id, e.username, e.realname, e.tel, e.email, d.id d_id,d.name d_name, e.inputTime, e.state, e.admin
+    from employee e left join department d on e.dept_id=d.id
+  </select>
+    <select id="queryCount" resultType="int">
+        select count(e.id) from employee e
+        <include refid="base_where"/>
+    </select>
+    <select id="queryList" resultMap="BaseResultMap">
+        select e.id, e.username, e.realname, e.tel, e.email, d.id d_id,d.name d_name, e.inputTime, e.state, e.admin
+        from employee e left join department d on e.dept_id=d.id
+        <include refid="base_where"/>
+        limit #{startIndex},#{rows}
+    </select>
+    <select id="selectByUsername" resultType="employee">
+      select * from employee where username=#{username}
+    </select>
+    <select id="selectPermissionResourceByEmployeeId" resultType="string">
+    select p.resource
+    from employee_role er
+    join role_permission rp on rp.role_id=er.role_id
+    join permission p on p.id=rp.permission_id
+    where er.employee_id = #{employeeId}
+  </select>
+    <select id="selectRoleNameByEmployeeId" resultType="string">
+        select r.name
+        from employee_role er
+        join role r on r.id=er.role_id
+        where er.employee_id=#{employeeId}
+    </select>
+
+    <sql id="base_where">
+        <where>
+            <if test="keyword != null and keyword != ''">
+                and (e.realname like concat('%',#{keyword},'%') or e.tel like concat('%',#{keyword},'%'))
+            </if>
+            <if test="deptId != null">
+                and e.dept_id =#{deptId}
+            </if>
+            <if test="beginDate != null">
+                and e.inputTime &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null">
+                and e.inputTime &lt;= #{endDate}
+            </if>
+            <if test="state != null">
+                and e.state = #{state}
+            </if>
+        </where>
+    </sql>
+
+</mapper>
