@@ -34,7 +34,7 @@
                 <tr>
                     <td>部门经理:</td>
                     <td><input name="manager.id" class="easyui-combobox"
-                               data-options="valueField:'id',textField:'realname',url:'/department/query.do',
+                               data-options="valueField:'id',textField:'realname',url:'/employee/listAll.do',
                         panelHeight:'auto'"/></td>
                 </tr>
                 <tr>
