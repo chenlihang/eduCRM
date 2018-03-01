@@ -2,6 +2,7 @@ package cn.wolfcode.crm.web.controller;
 
 import cn.wolfcode.crm.domain.Permission;
 import cn.wolfcode.crm.query.QueryObject;
+import cn.wolfcode.crm.query.QueryObjects;
 import cn.wolfcode.crm.service.IPermissionService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PageResult;
@@ -9,6 +10,8 @@ import cn.wolfcode.crm.util.PermissionName;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +26,8 @@ public class PermissionController {
     @RequestMapping("view")
     @RequiresPermissions("permission:view")
     @PermissionName("权限列表")
-    public String view(){
+    public String view(Model model, @ModelAttribute("qo")QueryObjects qo){
+        model.addAttribute("result", permissionService.query(qo));
         return "permission/view";
     }
 
@@ -33,11 +37,11 @@ public class PermissionController {
         return permissionService.selectAll();
     }
 
-    @RequestMapping("query")
-    @ResponseBody
-    public PageResult query(QueryObject qo){
-        return permissionService.query(qo);
-    }
+//    @RequestMapping("query")
+//    @ResponseBody
+//    public PageResult query(QueryObject qo){
+//        return permissionService.query(qo);
+//    }
 
     @RequestMapping("selectByRoleId")
     @ResponseBody
