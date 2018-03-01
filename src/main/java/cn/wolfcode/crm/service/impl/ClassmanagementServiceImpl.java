@@ -1,9 +1,9 @@
 package cn.wolfcode.crm.service.impl;
 
-import cn.wolfcode.crm.domain.Classroom;
-import cn.wolfcode.crm.mapper.ClassroomMapper;
+import cn.wolfcode.crm.domain.Classmanagement;
+import cn.wolfcode.crm.mapper.ClassmanagementMapper;
 import cn.wolfcode.crm.query.QueryObjects;
-import cn.wolfcode.crm.service.IClassroomService;
+import cn.wolfcode.crm.service.IClassmanagementService;
 import cn.wolfcode.crm.util.PageResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ClassroomServiceImpl implements IClassroomService {
+public class ClassmanagementServiceImpl implements IClassmanagementService {
     @Autowired
-    private ClassroomMapper mapper;
+    private ClassmanagementMapper mapper;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -21,12 +21,12 @@ public class ClassroomServiceImpl implements IClassroomService {
     }
 
     @Override
-    public int insert(Classroom entity) {
+    public int insert(Classmanagement entity) {
         return mapper.insert(entity);
     }
 
     @Override
-    public int saveOrUpdate(Classroom entity) {
+    public int saveOrUpdate(Classmanagement entity) {
         if (entity.getId() == null) {
              mapper.insert(entity);
         }
@@ -36,17 +36,17 @@ public class ClassroomServiceImpl implements IClassroomService {
     }
 
     @Override
-    public Classroom selectByPrimaryKey(Long id) {
+    public Classmanagement selectByPrimaryKey(Long id) {
         return mapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public List <Classroom> selectAll() {
+    public List <Classmanagement> selectAll() {
         return mapper.selectAll();
     }
 
     @Override
-    public int updateByPrimaryKey(Classroom entity) {
+    public int updateByPrimaryKey(Classmanagement entity) {
         return mapper.updateByPrimaryKey(entity);
     }
 
@@ -56,7 +56,7 @@ public class ClassroomServiceImpl implements IClassroomService {
         if (count == 0) {
             return PageResults.EMPTY_PAGE;
         }
-        List <Classroom> list = mapper.queryList(qo);
+        List <Classmanagement> list = mapper.queryList(qo);
         return new PageResults(qo.getCurrentPage(), qo.getPageSize(), mapper.queryList(qo), count);
     }
 

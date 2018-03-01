@@ -11,7 +11,7 @@ public interface IClassroomService {
 
     int insert(Classroom classroom);
 
-    void saveOrUpdate(Classroom classroom);
+    int saveOrUpdate(Classroom classroom);
 
     Classroom selectByPrimaryKey(Long id);
 
