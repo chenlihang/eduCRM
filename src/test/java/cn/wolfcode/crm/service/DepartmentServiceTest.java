@@ -20,7 +20,7 @@ public class DepartmentServiceTest {
         department.setName("xiaoxiaoxiao");
         department.setSn("xiao");
         department.setState(true);
-        //departmentService.insert(department);
+        departmentService.insert(department);
     }
 
     @Test
