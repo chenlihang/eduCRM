@@ -25,11 +25,11 @@
                 <input type="hidden" name="id"/>
                 <tr>
                     <td>部门编码:</td>
-                    <td><input name="sn" class="easyui-textbox"/></td>
+                    <td><input name="sn" class="easyui-textbox" prompt="请输入部门编码" required="true"/></td>
                 </tr>
                 <tr>
                     <td>部门名称:</td>
-                    <td><input name="name" class="easyui-textbox" prompt="请输入部门名称"/></td>
+                    <td><input name="name" class="easyui-textbox" prompt="请输入部门名称" required="true"/></td>
                 </tr>
                 <tr>
                     <td>部门经理:</td>
