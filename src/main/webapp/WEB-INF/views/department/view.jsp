@@ -12,7 +12,7 @@
     <div id="dept_toolbar">
         <a class="easyui-linkbutton" iconCls="icon-add" plain="true", onclick="add()">新增</a>
         <a class="easyui-linkbutton" iconCls="icon-edit" plain="true", onclick="edit()">编辑</a>
-        <a class="easyui-linkbutton" iconCls="icon-remove" plain="true",  onclick="remove()">解散</a>
+        <a class="easyui-linkbutton" iconCls="icon-remove" plain="true", id="dismiss_btn" onclick="dismiss()">解散</a>
         <a class="easyui-linkbutton" iconCls="icon-reload" plain="true", onclick="reload()">刷新</a>
     </div>
     <div id="dept_btns">
@@ -34,7 +34,7 @@
                 <tr>
                     <td>部门经理:</td>
                     <td><input name="manager.id" class="easyui-combobox"
-                               data-options="valueField:'id',textField:'name',url:'/department/query.do',
+                               data-options="valueField:'id',textField:'realname',url:'/department/query.do',
                         panelHeight:'auto'"/></td>
                 </tr>
                 <tr>

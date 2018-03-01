@@ -18,4 +18,6 @@ public interface IDepartmentService {
     PageResult query(QueryObject qo);
 
     Department selectByName(String name);
+
+    void dismiss(Long id);
 }

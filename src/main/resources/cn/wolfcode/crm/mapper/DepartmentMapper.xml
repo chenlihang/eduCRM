@@ -6,7 +6,8 @@
     <result column="sn" property="sn" />
     <result column="name" property="name" />
     <result column="state" property="state" />
-    <association property="manager" column="manager_id" select="cn.wolfcode.crm.mapper.EmployeeMapper.selectByPrimaryKey"></association>
+    <association property="manager" column="manager_id"
+                 select="cn.wolfcode.crm.mapper.EmployeeMapper.selectByPrimaryKey" javaType="employee"></association>
     <association property="parent" column="parent_id" select="selectByPrimaryKey"></association>
   </resultMap>
   <delete id="deleteByPrimaryKey">
@@ -25,7 +26,10 @@
       parent_id = #{parent.id}
     where id = #{id}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    <update id="dismiss">
+      update department set state = state^1 where id = #{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
     select id, sn, name, state, manager_id, parent_id
     from department
     where id = #{id}

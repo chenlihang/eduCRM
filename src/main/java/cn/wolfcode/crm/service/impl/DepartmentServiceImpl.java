@@ -20,6 +20,7 @@ public class DepartmentServiceImpl implements IDepartmentService {
         return mapper.deleteByPrimaryKey(id);
     }
 
+
     @Override
     public int saveOrUpdate(Department entity) {
         if (entity.getId() == null) {
@@ -52,5 +53,10 @@ public class DepartmentServiceImpl implements IDepartmentService {
     @Override
     public Department selectByName(String name) {
         return mapper.selectByName(name);
+    }
+
+    @Override
+    public void dismiss(Long id) {
+        mapper.dismiss(id);
     }
 }
