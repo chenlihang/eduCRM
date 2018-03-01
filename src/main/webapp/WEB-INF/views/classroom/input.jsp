@@ -21,7 +21,7 @@
             </td>
         </tr>
         <tr>
-            <td class="ui_text_rt" width="140">教室标语</td>
+            <td class="ui_text_rt" width="300">教室标语</td>
             <td class="ui_text_lt">
                 <input name="state" class="ui_input_txt02" value="${entity.state}"/>
             </td>
