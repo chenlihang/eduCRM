@@ -212,8 +212,8 @@
 
     left JOIN  datadictionaryitem `type` ON k.type_id=`type`.id
     left JOIN  datadictionaryitem educate ON k.educate_id=educate.id
-    <include refid="base_where"></include>
-    where k.id = #{id,jdbcType=BIGINT}
+
+    where k.id = #{id}
   </select>
   <select id="selectAll" resultMap="BaseListMap">
     select id, name, address, importance_id, intentionLevel_id, subject_id, college_id, 

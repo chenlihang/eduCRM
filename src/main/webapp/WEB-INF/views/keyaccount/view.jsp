@@ -22,8 +22,14 @@
     $(function () {
 
 
-        $(".edit").click(function () {
-            this;
+        $(".btn_delete").click(function () {
+            var url=$(this).data("url");
+            $.get(url,function (data) {
+                if(data.success)
+                {
+                    window.location.reload();
+                }
+            })
             
         });
         $(".search").click(function () {
@@ -82,10 +88,10 @@
                                     </div>
                                     <div>
                                         <a href="/keyaccount/input.do" class="btn btn-default " data-toggle="modal" data-target="#input"><i class="fa fa-plus"></i>新增</a>
-                                        <a href="/keyaccount/input.do" class="btn btn-default " data-toggle="modal" data-target="#input"><i class="fa fa-edit"></i>编辑</a>
-                                        <a href="#" class="btn btn-default delete" data-url="/keyaccount/delete.do"><i class="fa fa-minus"></i>删除</a>
+
+
                                         <a href="#" class="btn btn-default search"><i class="fa fa-search"></i>查询</a>
-                                        <a href="#" class="btn btn-default " data-toggle="modal" data-target="#myModal"><i class="fa fa-ellipsis-h"></i>更多</a>
+
 
                                         </div>
 
@@ -178,8 +184,8 @@
 
                                         </c:otherwise>
                                         </c:choose>
-                                        <td><a href="/employee/saveOrUpdate.do?id=${ele.id}">编辑</a>||
-                                            <a href="/employee/delete.do?id=${ele.id}">删除</a></td>
+                                        <td><a href="/keyaccount/input.do?id=${ele.id}" class="btn btn-default " data-toggle="modal" data-target="#input"><i class="fa fa-edit"></i>编辑</a>||
+                                            <a href="javascript:"  data-url="/keyaccount/delete.do?id=${ele.id}" class="btn btn-default delete" ><i class="fa fa-minus"></i>删除</a></td>
 
 
 
