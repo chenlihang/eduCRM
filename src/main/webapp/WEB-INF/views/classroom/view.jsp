@@ -44,17 +44,21 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关闭</font></font></button>
                 <button type="button" class="btn btn-default"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;" id="customerSubmit">保存更改</font></font></button>
+
             </div>
         </div>
     </div><!-- /.modal -->
 </div>
 <form id="searchForm" action="/classroom/view.do" method="post">
     <div>
+        <%--<a href="#" class="btn btn-default"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><i class="fa fa-plus"></i>新增</font></font></a>--%>
         <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>新增</a>
         <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>编辑</a>
         <a href="#" class="btn btn-default"><i class="fa fa-minus"></i>删除</a>
         <a href="#" class="btn btn-default"><i class="fa fa-search"></i>查询</a>
-        <a href="#" class="btn btn-default"><i class="fa fa-ellipsis-h"></i>更多</a>
+        <button type="button" class="btn btn-success btn-sm">
+            <i class="fa fa-cloud"></i><font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">上传文件</font></font></button>
     </div>
 
 

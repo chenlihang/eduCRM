@@ -2,6 +2,8 @@ package cn.wolfcode.crm.web.controller;
 
 import cn.wolfcode.crm.domain.Keyaccount;
 import cn.wolfcode.crm.query.KeyaccountQueryObject;
+import cn.wolfcode.crm.service.IContactService;
+import cn.wolfcode.crm.service.IEmployeeService;
 import cn.wolfcode.crm.service.IKeyaccountService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PageResults;
@@ -21,6 +23,10 @@ import java.util.List;
 public class KeyaccountController {
     @Autowired
     private IKeyaccountService keyaccountService;
+    @Autowired
+    private IContactService contactService;
+    @Autowired
+    private IEmployeeService employeeService;
 
     @RequestMapping("view")
     @RequiresPermissions("keyaccount:view")
@@ -30,6 +36,7 @@ public class KeyaccountController {
         PageResults result = keyaccountService.query(qo);
 
         model.addAttribute("result", result);
+        model.addAttribute("subjects",keyaccountService.selectDictionaryItemByDictionarySn("subject"));
 
 
         return "keyaccount/view";
@@ -40,27 +47,53 @@ public class KeyaccountController {
     public List<Keyaccount> list() {
         return keyaccountService.selectAll();
     }
+    @RequestMapping("delete")
+    @ResponseBody
+    public Object delete(Long id)
+    {
+        if(keyaccountService.deleteByPrimaryKey(id)>0)
+        {
+            return new JsonResult();
+        }
+        else
+        {
+
+            return new JsonResult().setErrorMsg("删除操作失败");
+        }
+
+    }
 
 
     @RequestMapping("input")
-    public String input(Keyaccount entity, Model model)
+    public String input(Long id, Model model)
 
     {
 
-        if (entity.getId() != null) {
-            Keyaccount enitity = keyaccountService.selectByPrimaryKey(entity.getId());
-            model.addAttribute("entity", entity);
+        if (id != null) {
+        System.out.println("到达");
+            Keyaccount enity = keyaccountService.selectByPrimaryKey(id);
+            model.addAttribute("enity", enity);
         }
+        model.addAttribute("importance",keyaccountService.selectDictionaryItemByDictionarySn("importance"));
+        model.addAttribute("intentionLevel",keyaccountService.selectDictionaryItemByDictionarySn("intentionLevel"));
+        model.addAttribute("subject",keyaccountService.selectDictionaryItemByDictionarySn("subject"));
+        model.addAttribute("college",keyaccountService.selectDictionaryItemByDictionarySn("college"));
+        model.addAttribute("contact",contactService.selectAll());
+        model.addAttribute("marketer",employeeService.selectAll());
+        model.addAttribute("tracer",employeeService.selectAll());
+        model.addAttribute("type",keyaccountService.selectDictionaryItemByDictionarySn("type"));
+        model.addAttribute("educate",keyaccountService.selectDictionaryItemByDictionarySn("educate"));
         return "keyaccount/input";
+
 
     }
 
 
     @RequestMapping("saveOrUpdate")
     @ResponseBody
-    public JsonResult saveOrUpdate(Keyaccount enitiy) {
+    public JsonResult saveOrUpdate(Keyaccount enity) {
 
-        if(keyaccountService.saveOrUpdate(enitiy)>0)
+        if(keyaccountService.saveOrUpdate(enity)>0)
         {
             return new JsonResult();
         }

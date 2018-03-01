@@ -19,6 +19,8 @@ public interface IEmployeeService {
 
     List<Employee> selectAll();
 
+    List<Employee> selectEmployeeByDepartmentSn(String sn);
+
     int updateByPrimaryKey(Employee entity);
 
     PageResults query(QueryObjects qo);

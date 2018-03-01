@@ -34,4 +34,6 @@ public interface EmployeeMapper {
     List <String> selectPermissionResourceByEmployeeId(Long id);
 
     List<String> selectRoleNameByEmployeeId(Long id);
+
+    List<Employee> selectEmployeeByDepartmentSn(String sn);
 }

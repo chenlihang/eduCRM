@@ -23,17 +23,20 @@
             });
 
             $(".btn_change").click(function () {
-                var href = $(this).data("path");
-                var ret = $("#dialog_confirm").modal("toggle");
-                if (ret) {
-                    $.get(href, function (data) {
-                        if (data.success) {
-                            $("#dialog_content").html("操作成功");
-                            $(".dialog_info").modal("toggle");
-                        }
-                    });
+                var href = $(this).data("href");
+                var a = $("#dialog_confirm").modal("toggle");
+                if(a){
+                    $("#btn_confirm").click(function () {
+                        $.get(href, function (data) {
+                            if(data.success){
+                                $("#dialog_content").html("操作成功");
+                                $(".dialog_info").modal('toggle');
+                            }
+                        },"json");
+                    })
                 }
             });
+
         })
     </script>
 </head>
@@ -109,7 +112,7 @@
                     <td>${entity.state?"在职":"离职"}</td>
                     <td>${entity.admin?"是":"否"}</td>
                     <td><a href="/employee/input.do?id=${entity.id}" class="btn btn-default" data-toggle="modal" data-target="#input_box">编辑</a>
-                    <a data-path="/employee/updateState.do?id=${entity.id}" class="btn btn-default btn_change" >修改状态</a></td>
+                    <a data-href="/employee/updateState.do?id=${entity.id}" class="btn btn-default btn_change" >修改状态</a></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -154,6 +157,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="btn_confirm" class="btn btn-default" data-dismiss="modal" >确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
             </div>
         </div>
     </div>
