@@ -72,7 +72,12 @@
             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;意向程度&nbsp;:&nbsp;</td>
             <td><input type="text" name="intentionExtent" value="${entity.intentionExtent}"></td>
             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前状态&nbsp;:&nbsp;</td>
-            <td><input type="text" name="state" value="${entity.state}"></td>
+            <td><input type="text" name="state" value="${entity.state}">
+                <%--<select style="width: 166px">
+                    <option value="1">1</option>
+                    <option value="1">2</option>
+                </select>--%>
+            </td>
         </tr>
         <tr>
             <td colspan="6">&nbsp;</td>
