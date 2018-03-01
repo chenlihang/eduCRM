@@ -57,6 +57,13 @@
         and (name like grade('%',#{keyword},'%') or classroom like concat('%',#{keyword},'%')
         or attendcher like concat ('%',#{keyword},'%'))
       </if>
+      <if test="beginDate != null">
+        and e.inputTime &gt;= #{beginDate}
+      </if>
+      <if test="endDate != null">
+        and e.inputTime &lt;= #{endDate}
+      </if>
+
 
     </where>
   </sql>

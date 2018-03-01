@@ -1,7 +1,7 @@
 package cn.wolfcode.crm.web.controller;
 
 import cn.wolfcode.crm.domain.Classschedule;
-import cn.wolfcode.crm.query.ClassroomQueryObject;
+import cn.wolfcode.crm.query.ClassscheduleQueryObject;
 import cn.wolfcode.crm.query.EmployeeQueryObject;
 import cn.wolfcode.crm.service.IClassscheduleService;
 import cn.wolfcode.crm.util.PageResults;
@@ -25,7 +25,7 @@ public class ClassscheduleController {
     @RequestMapping("view")
     @RequiresPermissions("classroom:view")
     @PermissionName("课程列表")
-    public String view(Model model, @ModelAttribute("qo") ClassroomQueryObject qo) {
+    public String view(Model model, @ModelAttribute("qo") ClassscheduleQueryObject qo) {
         model.addAttribute("result", classscheduleService.query(qo));
         return "classschedule/view";
 

@@ -43,7 +43,7 @@
         <table style="margin-left: 50px">
             <tr>
                 <td>真实姓名&nbsp;</td>
-                <td><input type="text" class="form-control" id="input11" name="realname" value="${entity.realname}">
+                <td><input type="text" class="form-control" name="realname" value="${entity.realname}">
                 </td>
             </tr>
             <tr>
@@ -61,24 +61,6 @@
                 <td><input type="text" class="form-control" name="email" value="${entity.email}"></td>
             </tr>
         </table>
-        <%--<div class="form-group">
-            <label class="col-sm-2 control-label form-label">真实姓名</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="input11" name="realname" value="${entity.realname}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label form-label">电话</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="tel" value="${entity.tel}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label form-label">邮箱</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="email" value="${entity.email}">
-            </div>
-        </div>--%>
         <br/>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
