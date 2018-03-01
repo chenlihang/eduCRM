@@ -1,7 +1,10 @@
 package cn.wolfcode.crm.service.impl;
 
 import cn.wolfcode.crm.domain.Customer;
+import cn.wolfcode.crm.domain.DataDictionary;
 import cn.wolfcode.crm.mapper.CustomerMapper;
+import cn.wolfcode.crm.mapper.DataDictionaryItemMapper;
+import cn.wolfcode.crm.mapper.DataDictionaryMapper;
 import cn.wolfcode.crm.query.QueryObjects;
 import cn.wolfcode.crm.service.ICustomerService;
 import cn.wolfcode.crm.util.PageResults;
@@ -14,7 +17,10 @@ import java.util.List;
 public class CustomerServiceImpl implements ICustomerService {
     @Autowired
     private CustomerMapper mapper;
-
+    @Autowired
+    private DataDictionaryMapper dataDictionaryMapper;
+    @Autowired
+    private DataDictionaryItemMapper dataDictionaryItemMapper;
     @Override
     public int deleteByPrimaryKey(Long id) {
         return mapper.deleteByPrimaryKey(id);
@@ -58,4 +64,18 @@ public class CustomerServiceImpl implements ICustomerService {
         List <Customer> list = mapper.queryList(qo);
         return new PageResults(qo.getCurrentPage(),qo.getPageSize(),list,count);
     }
+
+
+    /**
+     *
+     * 获取所有字典明细放入List中
+     * @return List DataDictionaryItem明细对象
+     */
+
+    @Override
+    public List<DataDictionary> getDataDictionaryItemList1(){
+        return dataDictionaryMapper.selectAll();
+    }
+
+
 }

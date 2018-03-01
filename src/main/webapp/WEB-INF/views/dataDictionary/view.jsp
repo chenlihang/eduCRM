@@ -27,8 +27,10 @@
                                    $("#dialog_content").html("删除成功");
 
                                    $(".dialog_info").modal('toggle');
+                                   $(".btn_close").click(function () {
+                                       window.location.reload();
+                                   });
 
-                                  /* window.location.reload();*/
                                }
                             },"json");
                         });
@@ -110,13 +112,13 @@
                                 for="${entity.id}"></label></div>
                     </td>
                     <td class="text-center">${num.count}</td>
-                    <td>${entity.name}</td>
                     <td>${entity.sn}</td>
+                    <td>${entity.name}</td>
                     <td>${entity.intro}</td>
                     <td>
                         <a href="/dataDictionary/input.do?id=${entity.id}" class="btn btn-default btn_dictionedit" data-url="/dataDictionary/input.do?id=${entity.id}" data-toggle="modal" data-target="#myModal3"><i class="fa fa-edit"></i>编辑</a>
                         <%--<a href="javascript:;" class="btn btn-default btn_dictionarydelete" data-url="/dataDictionary/delete.do?id=${entity.id}"><i class="fa fa-minus"></i>删除</a>--%>
-                        <a href="/dataDictionaryItem/view.do?sn=${entity.sn}&sid=${entity.id}" class="btn btn-default"><i class="fa fa-child"></i>查看</a>
+                        <a href="/dataDictionaryItem/view.do?sn=${entity.sn}&sid=${entity.id}" class="btn btn-default"><i class="fa fa-child"></i>查看明细</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -129,6 +131,7 @@
 <!-- 模态框（Modal） -->
 <div class="modal fade" id="input_box" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-content">
+
     </div><!-- /.modal -->
 </div>
 

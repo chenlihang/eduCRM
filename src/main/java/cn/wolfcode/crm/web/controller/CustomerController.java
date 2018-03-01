@@ -3,6 +3,7 @@ package cn.wolfcode.crm.web.controller;
 import cn.wolfcode.crm.domain.Customer;
 import cn.wolfcode.crm.query.CustomerQueryObject;
 import cn.wolfcode.crm.service.ICustomerService;
+import cn.wolfcode.crm.service.IDataDictionaryService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PermissionName;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
-
+    @Autowired
+    private IDataDictionaryService dataDictionaryService;
     @RequestMapping("view")
     @RequiresPermissions("customer:view")
     @PermissionName("客户列表")
@@ -47,6 +49,17 @@ public class CustomerController {
         }
         return new JsonResult();
     }
+
+    @RequestMapping("input")
+    public String list(Model model, Long id,String sn) throws Exception {
+        if (id != null) {
+            model.addAttribute("entity", customerService.selectByPrimaryKey(id));
+        }
+        model.addAttribute("dataItemList",dataDictionaryService.list());
+        return "customer/input";
+    }
+
+
 
 
 

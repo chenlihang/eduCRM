@@ -16,7 +16,7 @@
 
     <script>
         $(function () {
-            $("#customerSubmit").click(function () {
+          /*  $("#customerSubmit").click(function () {
                 $("#editForm").ajaxSubmit(function (data) {
                    if(data.success){
                        showDialog("操作成功",function () {
@@ -24,7 +24,31 @@
                        })
                    }
                 })
+            });*/
+
+            $(".btn_datadictionary").click(function () {
+                $("#editForm").ajaxSubmit(function (data) {
+                    if(data.success){
+                        $('.dialog_info').modal('toggle');
+                        showDialog("操作成功",function () {
+                            window.location.href="/customer/view.do";
+                        })
+                    }
+                })
             });
+
+            $("#myModal").on("hidden.bs.modal", function() {
+                $(this).removeData("bs.modal");
+            });
+            /*  $(".btn_add_datadictionary").on("click", function() {
+                  alert(1)
+                  $(this).removeData("bs.modal");
+             });*/
+            $('#myModal').on('hidden.bs.modal', function () {
+                $(this).removeData("bs.modal").val("");
+            });
+
+
         });
     </script>
 </head>
@@ -33,23 +57,15 @@
 <div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">×</font></font></span></button>
-                <h4 class="modal-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">潜在客户编辑</font></font></h4>
-            </div>
-            <div class="modal-body" style="text-align:center"><font style="vertical-align: inherit; text-align: center"><font style="vertical-align: inherit;">
-                <%@include file="input.jsp"%>
-            </font></font></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关闭</font></font></button>
-                <button type="button" class="btn btn-default"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;" id="customerSubmit">保存更改</font></font></button>
-            </div>
+
+                <%--<%@include file="input.jsp"%>--%>
+
         </div>
     </div><!-- /.modal -->
 </div>
 <form id="searchForm" action="/customer/view.do" method="post">
     <div>
-        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>新增</a>
+        <a href="/customer/input.do" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>新增</a>
         <a href="#" class="btn btn-default"><i class="fa fa-edit"></i>编辑</a>
         <a href="#" class="btn btn-default"><i class="fa fa-minus"></i>删除</a>
         <a href="#" class="btn btn-default"><i class="fa fa-search"></i>查询</a>
@@ -103,5 +119,58 @@
         <%@include file="/WEB-INF/views/common/page.jsp" %>
     </div>
 </form>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="input_box" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-content">
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade dialog_info" role="dialog" style="padding-right: 17px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">温馨提示</h4>
+            </div>
+            <div id="dialog_content" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn_close" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 模态框   信息删除确认 -->
+<div class="modal fade dialog_del" id="delcfmOverhaul">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <!-- 隐藏需要删除的id -->
+                <input type="hidden" id="deleteHaulId" />
+                <p>您确认要删除该条信息吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary"
+                        id="deleteHaulBtn" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 </body>
 </html>

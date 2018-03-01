@@ -19,7 +19,7 @@
     <result column="inputUser_id" property="inputUser_id" />
     <result column="salesman_id" property="salesman_id" />
     <result column="inputTime" property="inputTime" />
-    <result column="source" property="source" />
+   <!-- <result column="source" property="source" />-->
     <result column="collegeClient" property="collegeClient" />
     <result column="clientType" property="clientType" />
     <result column="intentionCampus" property="intentionCampus" />
@@ -31,6 +31,13 @@
     <result column="nextFollowDate" property="nextFollowDate" />
     <result column="concern" property="concern" />
     <result column="remark" property="remark" />
+    <!--客户来源-->
+    <association property="source" javaType="dataDictionaryItem" columnPrefix="source_">
+      <id property="id" column="id"/>
+      <result property="name" column="name"/>
+    </association>
+
+
   </resultMap>
   <delete id="deleteByPrimaryKey">
     delete from customer
@@ -42,10 +49,10 @@
       salesman_id, inputTime, source, collegeClient, clientType, intentionCampus, 
       intentionSubject, intentionClass, intentionExtent, state, computer, 
       nextFollowDate, concern, remark)
-    values (#{name}, #{weChat}, #{QQ}, #{tel}, #{age}, #{gender}, #{email}, #{province}, 
-      #{diplomas}, #{major}, #{school}, #{graduateTime}, #{workSeniority}, #{inputUser_id}, 
-      #{salesman_id}, #{inputTime}, #{source}, #{collegeClient}, #{clientType}, #{intentionCampus}, 
-      #{intentionSubject}, #{intentionClass}, #{intentionExtent}, #{state}, #{computer}, 
+    values (#{name}, #{weChat}, #{QQ}, #{tel}, #{age}, #{gender}, #{email}, #{province.id},
+      #{diplomas.id}, #{major}, #{school}, #{graduateTime}, #{workSeniority}, #{inputUser_id},
+      #{salesman_id}, #{inputTime}, #{source.id}, #{collegeClient}, #{clientType.id}, #{intentionCampus.id},
+      #{intentionSubject.id}, #{intentionClass.id}, #{intentionExtent.id}, #{state.id}, #{computer},
       #{nextFollowDate}, #{concern}, #{remark})
   </insert>
   <update id="updateByPrimaryKey">
@@ -109,4 +116,38 @@
     from customer
     limit #{start},#{pageSize}
   </select>
+  <sql id="base_table">
+      select
+      customer.id,
+      customer.name,
+      customer.weChat,
+      customer.QQ,
+      customer.tel,
+      customer.age,
+      customer.gender,
+      customer.email,
+      customer.province,
+      diplomas,
+      major,
+      school,
+      graduateTime,
+      workSeniority,
+      inputUser_id,
+      salesman_id,
+      inputTime,
+      source,
+      collegeClient,
+      clientType,
+      intentionCampus,
+      intentionSubject,
+      intentionClass,
+      intentionExtent,
+      state,
+      computer,
+      nextFollowDate,
+      concern,
+      remark
+    from customer
+  </sql>
+
 </mapper>
