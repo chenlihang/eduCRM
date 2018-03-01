@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -48,7 +48,7 @@
                                 for="${entity.id}"></label></div>
                     </td>
                     <td class="text-center">${entity.id}</td>
-                    <td>${entity.time}</td>
+                    <td><fmt:formatDate value="${entity.time}" pattern="yyyy-MM-dd"/></td>
                     <td>${entity.week}</td>
                     <td>${entity.grade.gradeuser}</td>
                     <td>${entity.coursename}</td>
