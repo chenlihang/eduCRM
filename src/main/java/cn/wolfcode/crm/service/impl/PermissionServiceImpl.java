@@ -3,8 +3,10 @@ package cn.wolfcode.crm.service.impl;
 import cn.wolfcode.crm.domain.Permission;
 import cn.wolfcode.crm.mapper.PermissionMapper;
 import cn.wolfcode.crm.query.QueryObject;
+import cn.wolfcode.crm.query.QueryObjects;
 import cn.wolfcode.crm.service.IPermissionService;
 import cn.wolfcode.crm.util.PageResult;
+import cn.wolfcode.crm.util.PageResults;
 import cn.wolfcode.crm.util.PermissionName;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,13 +61,13 @@ public class PermissionServiceImpl implements IPermissionService {
 
 
     @Override
-    public PageResult query(QueryObject qo) {
+    public PageResults query(QueryObjects qo) {
         int count = mapper.queryCount(qo);
         if (count == 0) {
-            return PageResult.EMPTY_RESULT;
+            return PageResults.EMPTY_PAGE;
         }
         List <Permission> list = mapper.queryList(qo);
-        return new PageResult(count, list);
+        return new PageResults(qo.getCurrentPage(),qo.getPageSize(),list,count);
     }
 
     @Override
@@ -78,8 +80,9 @@ public class PermissionServiceImpl implements IPermissionService {
         List<String> resources=mapper.getAllResources();
         Collection <Object> beans = ctx.getBeansWithAnnotation(Controller.class).values();
         for (Object bean : beans) {
-            Method[] methods = bean.getClass().getDeclaredMethods();
+            Method[] methods = bean.getClass().getSuperclass().getDeclaredMethods();
             for (Method method : methods) {
+//                PermissionName anno = method.getAnnotation(PermissionName.class);
                 RequiresPermissions anno = method.getAnnotation(RequiresPermissions.class);
                 if (anno != null) {
                     if (!resources.contains(anno.value()[0])) {

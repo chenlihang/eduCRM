@@ -22,14 +22,16 @@ import java.util.List;
 public class ClassroomController {
     @Autowired
     private IClassroomService classroomService;
+
     @RequestMapping("view")
     @RequiresPermissions("classroom:view")
     @PermissionName("教室管理列表")
-    public String view(Model model, @ModelAttribute("qo")ClassroomQueryObject qo){
-        model.addAttribute("result",classroomService.query(qo));
+    public String view(Model model, @ModelAttribute("qo") ClassroomQueryObject qo) {
+        model.addAttribute("result", classroomService.query(qo));
         return "classroom/view";
 
     }
+
     @RequestMapping("query")
     @ResponseBody
     public PageResults query(EmployeeQueryObject qo) {
@@ -38,15 +40,15 @@ public class ClassroomController {
 
     @RequestMapping("listAll")
     @ResponseBody
-    public List<Classroom> listAll   () {
+    public List<Classroom> listAll() {
         return classroomService.selectAll();
     }
 
     @RequestMapping("saveOrUpdate")
     @ResponseBody
-    public JsonResult saveOrUpdate(Classroom classroom) {
+    public JsonResult saveOrUpdate(Classroom entity) {
         try {
-            classroomService.saveOrUpdate(classroom);
+            int i = classroomService.saveOrUpdate(entity);
         } catch (Exception e) {
             e.printStackTrace();
             return new JsonResult().setErrorMsg("保存失败");

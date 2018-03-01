@@ -20,10 +20,6 @@ public class DepartmentServiceImpl implements IDepartmentService {
         return mapper.deleteByPrimaryKey(id);
     }
 
-    @Override
-    public int insert(Department entity) {
-        return mapper.insert(entity);
-    }
 
     @Override
     public int saveOrUpdate(Department entity) {
@@ -45,22 +41,22 @@ public class DepartmentServiceImpl implements IDepartmentService {
     }
 
     @Override
-    public int updateByPrimaryKey(Department entity) {
-        return mapper.updateByPrimaryKey(entity);
-    }
-
-    @Override
     public PageResult query(QueryObject qo) {
         int count = mapper.queryCount(qo);
         if (count == 0) {
             return PageResult.EMPTY_RESULT;
         }
-        List <Department> list = mapper.queryList(qo);
+        List<Department> list = mapper.queryList(qo);
         return new PageResult(count, list);
     }
 
     @Override
     public Department selectByName(String name) {
         return mapper.selectByName(name);
+    }
+
+    @Override
+    public void dismiss(Long id) {
+        mapper.dismiss(id);
     }
 }

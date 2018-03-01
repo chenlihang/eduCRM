@@ -2,6 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.wolfcode.crm.mapper.KeyaccountMapper">
   <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.Keyaccount">
+  <id column="id"   property="id" />
+  <result column="name"  property="name" />
+  <result column="address"  property="address" />
+  <result column="prevTranceTime"   property="prevTranceTime" />
+  <result column="nextTranceTime"   property="nextTranceTime" />
+  <result column="traceState" property="traceState" />
+  <result column="schoolTel"   property="schoolTel" />
+  <result column="customerStatus" property="customerStatus" />
+  <result column="email"  property="email" />
+  <result column="stuNumber"   property="stuNumber" />
+  <result column="itstuNumber"   property="itstuNumber" />
+  <result column="telegraph"  property="telegraph" />
+  <result column="postcode"  property="postcode" />
+  <result column="teacherNumber"  property="teacherNumber" />
+  <result column="remark"  property="remark" />
+  <result column="introduction"  property="introduction" />
+  <result column="cooperation" property="cooperation" />
+  <association columnPrefix="importance_" javaType="dataDictionaryItem" property="importance" >
+    <id column="id" property="id"></id>
+    <result column="name" property="name"></result>
+
+  </association>
+  <association columnPrefix="intention_"  javaType="dataDictionaryItem"   property="intentionLevel" >
+    <id column="id" property="id"></id>
+    <result column="name" property="name"></result>
+  </association>
+  <association columnPrefix="subject_"  javaType="dataDictionaryItem" property="subject" >
+    <id column="id" property="id"></id>
+    <result column="name" property="name"></result>
+  </association>
+  <association columnPrefix="college_"  javaType="dataDictionaryItem"  property="college" >
+    <id column="id" property="id"></id>
+    <result column="name" property="name"></result>
+  </association>
+  <!--<result column="contact_id"   property="contact" />-->
+  <association columnPrefix="marketer_"   javaType="employee"  property="marketer" >
+    <id column="id" property="id"></id>
+    <result column="name" property="realname"></result>
+  </association>
+  <association columnPrefix="tracer_"  javaType="employee"   property="tracer" >
+    <id column="id" property="id"></id>
+    <result column="name" property="realname"></result>
+  </association>
+
+  <association columnPrefix="type_"   javaType="dataDictionaryItem"  property="type" >
+    <id column="id" property="id"></id>
+    <result column="name" property="name"></result>
+  </association>
+  <association columnPrefix="educate_"  javaType="dataDictionaryItem"  property="educate" >
+    <id column="id" property="id"></id>
+    <result column="name" property="name"></result>
+  </association>
+</resultMap>
+
+  <resultMap id="BaseListMap" type="cn.wolfcode.crm.domain.Keyaccount">
     <id column="id"   property="id" />
     <result column="name"  property="name" />
     <result column="address"  property="address" />
@@ -10,15 +65,6 @@
     <result column="traceState" property="traceState" />
     <result column="schoolTel"   property="schoolTel" />
     <result column="customerStatus" property="customerStatus" />
-    <result column="email"  property="email" />
-    <result column="stuNumber"   property="stuNumber" />
-    <result column="itstuNumber"   property="itstuNumber" />
-    <result column="telegraph"  property="telegraph" />
-    <result column="postcode"  property="postcode" />
-    <result column="teacherNumber"  property="teacherNumber" />
-    <result column="remark"  property="remark" />
-    <result column="introduction"  property="introduction" />
-    <result column="cooperation" property="cooperation" />
     <association columnPrefix="importance_" javaType="dataDictionaryItem" property="importance" >
       <id column="id" property="id"></id>
       <result column="name" property="name"></result>
@@ -46,42 +92,51 @@
       <result column="name" property="realname"></result>
     </association>
 
-    <association columnPrefix="type_"   javaType="dataDictionaryItem"  property="type" >
-      <id column="id" property="id"></id>
-      <result column="name" property="name"></result>
-    </association>
-    <association columnPrefix="educate_"  javaType="dataDictionaryItem"  property="educate" >
-      <id column="id" property="id"></id>
-      <result column="name" property="name"></result>
-    </association>
+
   </resultMap>
   <sql id="base_column">
-     select k.id, k.name, k.address,
+      select k.id, k.name, k.address,
      k.importance_id ,importance.name  importance_name,
     k.intentionLevel_id intention_id,intention.name  intention_name,
      k.subject_id,subject.name  subject_name,
      k.college_id,college.name college_name,
     k.contact_id,contact.name contact_name,
-    k.marketer_id,macketer.name macketer_name,
-    k.tracer_id,tracer.name tracer_name,
+     k.marketer_id,marketer.realname  marketer_name,
+     k.tracer_id,tracer.realname  tracer_name,
+
+
     k.prevTranceTime, k.nextTranceTime, k.traceState, k.schoolTel,
     k.customerStatus
 
 
   </sql>
   <sql id="base_table">
-    from keyaccount k
-    left JOIN  dictionaryitem importance ON k.importance_id=importance.id
-    left JOIN  dictionaryitem intention ON k.intentionLevel_id=intention.id
-    left JOIN  dictionaryitem subject ON k.subject_id=subject.id
-    left JOIN  dictionaryitem college ON k.college_id=college.id
-    left join  contact on k.contact_id=contact.id
+   from keyaccount k
+    left JOIN  datadictionaryitem importance ON k.importance_id=importance.id
+    left JOIN  datadictionaryitem intention ON k.intentionLevel_id=intention.id
+    left JOIN  datadictionaryitem subject ON k.subject_id=subject.id
+    left JOIN  datadictionaryitem college ON k.college_id=college.id
+    left join  contact  contact on k.contact_id=contact.id
     left join  employee marketer on k.marketer_id=marketer.id
+    left join  employee tracer on k.tracer_id=tracer.id
+
 
 
   </sql>
   <sql id="base_where">
+   <where>
+     <if test="keyword!=null" >
+      and ( k.name like concat('%',#{keyword},'%') or
+       k.address like concat('%',#{keyword},'%') )
 
+     </if>
+     <if test="subjectId>0" >
+
+       and k.subject_id =#{subjectId}
+
+     </if>
+
+   </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from keyaccount
@@ -145,13 +200,13 @@
     k.telegraph, k.postcode,
     k.teacherNumber, k.remark, k.introduction, k.cooperation
     <include refid="base_table"></include>
-    left join  employee tracer on k.market_id=tracer.id
-    left JOIN  dictionaryitem `type` ON k.type_id=`type`.id
-    left JOIN  dictionaryitem educate ON k.educate_id=educate.id
+
+    left JOIN  datadictionaryitem `type` ON k.type_id=`type`.id
+    left JOIN  datadictionaryitem educate ON k.educate_id=educate.id
     <include refid="base_where"></include>
     where k.id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="selectAll" resultMap="BaseListMap">
     select id, name, address, importance_id, intentionLevel_id, subject_id, college_id, 
     contact_id, marketer_id, tracer_id, prevTranceTime, nextTranceTime, traceState, schoolTel, 
     customerStatus, email, stuNumber, itstuNumber, type_id, educate_id, telegraph, postcode, 
@@ -164,7 +219,7 @@
       <include refid="base_where"></include>
 
     </select>
-  <select id="queryList" resultMap="BaseResultMap" >
+  <select id="queryList" resultMap="BaseListMap" >
     <include refid="base_column"></include>
     <include refid="base_table"></include>
     <include refid="base_where"></include>

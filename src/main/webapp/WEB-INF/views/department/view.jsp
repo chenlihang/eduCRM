@@ -1,20 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ include file="/static/common/common.jsp"%>
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/css/bootstrap-flatly.css">
-    <script src="/js/plugins/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="/js/plugins/bootstrap.min.js"></script>
-
-    <title>员工管理</title>
+    <title>部门管理</title>
+    <script type="text/javascript" src="/static/js/department.js"></script>
 </head>
 <body>
-
+    <table id="dept_datagrid"></table>
+    <div id="dept_toolbar">
+        <a class="easyui-linkbutton" iconCls="icon-add" plain="true", onclick="add()">新增</a>
+        <a class="easyui-linkbutton" iconCls="icon-edit" plain="true", onclick="edit()">编辑</a>
+        <a class="easyui-linkbutton" iconCls="icon-remove" plain="true", id="dismiss_btn" onclick="dismiss()">解散</a>
+        <a class="easyui-linkbutton" iconCls="icon-reload" plain="true", onclick="reload()">刷新</a>
+    </div>
+    <div id="dept_btns">
+        <a class="easyui-linkbutton" iconCls="icon-save" plain="true", onclick="save()">保存</a>
+        <a class="easyui-linkbutton" iconCls="icon-cancel" plain="true", onclick="cancel()">取消</a>
+    </div>
+    <div id="dept_dialog">
+        <form id="dept_form" method="post">
+            <table align="center" style="margin-top:15px">
+                <input type="hidden" name="id"/>
+                <tr>
+                    <td>部门编码:</td>
+                    <td><input name="sn" class="easyui-textbox" prompt="请输入部门编码" required="true"/></td>
+                </tr>
+                <tr>
+                    <td>部门名称:</td>
+                    <td><input name="name" class="easyui-textbox" prompt="请输入部门名称" required="true"/></td>
+                </tr>
+                <tr>
+                    <td>部门经理:</td>
+                    <td><input name="manager.id" class="easyui-combobox"
+                               data-options="valueField:'id',textField:'realname',url:'/employee/listAll.do',
+                        panelHeight:'auto'"/></td>
+                </tr>
+                <tr>
+                    <td>上级部门:</td>
+                    <td><input name="parent.id" class="easyui-combobox"
+                               data-options="valueField:'id',textField:'name',url:'/department/query.do',
+                        panelHeight:'auto'"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </body>
 </html>

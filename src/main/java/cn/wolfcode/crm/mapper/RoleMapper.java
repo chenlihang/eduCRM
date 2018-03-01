@@ -3,6 +3,7 @@ package cn.wolfcode.crm.mapper;
 import cn.wolfcode.crm.domain.Permission;
 import cn.wolfcode.crm.domain.Role;
 import cn.wolfcode.crm.query.QueryObject;
+import cn.wolfcode.crm.query.QueryObjects;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,9 +19,9 @@ public interface RoleMapper {
 
     int updateByPrimaryKey(Role entity);
 
-    int queryCount(QueryObject qo);
+    int queryCount(QueryObjects qo);
 
-    List<Role> queryList(QueryObject qo);
+    List<Role> queryList(QueryObjects qo);
 
     void deletePermissionRelation(Long id);
 

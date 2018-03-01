@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.crm.mapper.ContactMapper">
+  <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.Contact">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="gander" property="gander" />
+    <result column="birthday" property="birthday" />
+    <result column="dept" property="dept" />
+    <result column="duty" property="duty" />
+    <result column="tel" property="tel" />
+    <result column="qq" property="qq" />
+    <result column="email" property="email" />
+    <result column="main" property="main" />
+    <result column="intro" property="intro" />
+    <association property="keyaccount" javaType="Keyaccount" columnPrefix="k_">
+      <id column="id" property="id"/>
+      <result column="name" property="name"/>
+    </association>
+  </resultMap>
+  <delete id="deleteByPrimaryKey">
+    delete from contact
+    where id = #{id}
+  </delete>
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    insert into contact (name, gander, birthday, keyaccount_id, dept, duty, tel,
+      qq, email, main, intro)
+    values (#{name}, #{gander}, #{birthday}, #{keyaccount.id}, #{dept}, #{duty}, #{tel},
+      #{qq}, #{email}, #{main}, #{intro})
+  </insert>
+  <update id="updateByPrimaryKey">
+    update contact
+    set name = #{name},
+      gander = #{gander},
+      birthday = #{birthday},
+      keyaccount_id = #{keyaccount.id},
+      dept = #{dept},
+      duty = #{duty},
+      tel = #{tel},
+      qq = #{qq},
+      email = #{email},
+      main = #{main},
+      intro = #{intro}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    SELECT c.id,c.name,c.gander,c.birthday,k.id k_id,k.name k_name,c.dept,c.duty,c.tel,c.qq,c.email,c.main,c.intro
+    from contact c LEFT JOIN keyaccount k on c.keyaccount_id=k.id
+    where c.id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT c.id,c.name, c.gander, c.birthday,k.id k_id,k.name k_name,c.dept, c.duty,c.tel,c.qq, c.email, c.main,c.intro
+    from contact c LEFT JOIN keyaccount k on c.keyaccount_id=k.id
+  </select>
+    <select id="queryCount" resultType="int">
+      select count(c.id) from contact c
+      <include refid="base_where"/>
+    </select>
+    <select id="queryList" resultMap="BaseResultMap">
+      select c.id,c.name, c.gander, c.birthday,k.id k_id,k.name k_name, c.dept, c.duty,c.tel,c.qq, c.email, c.main,c.intro
+      from contact c left join keyaccount k on c.keyaccount_id=k.id
+      <include refid="base_where"/>
+      limit #{start},#{pageSize}
+    </select>
+    <sql id="base_where">
+      <where>
+        <if test="keyword != null and keyword != ''">
+          and (c.name like concat('%',#{keyword},'%') or c.email like concat('%',#{keyword},'%'))
+        </if>
+        <if test="keyaccountId != null">
+          and c.keyaccount_id =#{keyaccountId}
+        </if>
+      </where>
+    </sql>
+</mapper>
