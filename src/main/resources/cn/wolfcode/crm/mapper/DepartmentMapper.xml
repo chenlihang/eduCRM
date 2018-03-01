@@ -15,7 +15,7 @@
     where id = #{id}
   </delete>
   <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-    insert into department (sn, name, state, manager_id, parent_id)
+    insert into department (sn, name, manager_id, parent_id)
     values (#{sn}, #{name}, #{manager.id}, #{parent.id})
   </insert>
   <update id="updateByPrimaryKey">
