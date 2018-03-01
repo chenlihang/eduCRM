@@ -3,8 +3,10 @@ package cn.wolfcode.crm.service.impl;
 import cn.wolfcode.crm.domain.Role;
 import cn.wolfcode.crm.mapper.RoleMapper;
 import cn.wolfcode.crm.query.QueryObject;
+import cn.wolfcode.crm.query.QueryObjects;
 import cn.wolfcode.crm.service.IRoleService;
 import cn.wolfcode.crm.util.PageResult;
+import cn.wolfcode.crm.util.PageResults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,13 +56,13 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public PageResult query(QueryObject qo) {
+    public PageResults query(QueryObjects qo) {
         int count = mapper.queryCount(qo);
         if (count == 0) {
-            return PageResult.EMPTY_RESULT;
+            return PageResults.EMPTY_PAGE;
         }
         List <Role> list = mapper.queryList(qo);
-        return new PageResult(count, list);
+        return new PageResults(qo.getCurrentPage(),qo.getPageSize(),list,count);
     }
 
     @Override
