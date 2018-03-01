@@ -38,6 +38,15 @@ public class ClassroomController {
         return classroomService.query(qo);
     }
 
+
+    @RequestMapping("input")
+    public String input(Long id,Model model) {
+        if (id != null) {
+            model.addAttribute("entity",classroomService.selectByPrimaryKey(id));
+        }
+        return "classroom/input";
+    }
+
     @RequestMapping("listAll")
     @ResponseBody
     public List<Classroom> listAll() {
@@ -48,7 +57,7 @@ public class ClassroomController {
     @ResponseBody
     public JsonResult saveOrUpdate(Classroom entity) {
         try {
-            int i = classroomService.saveOrUpdate(entity);
+            classroomService.saveOrUpdate(entity);
         } catch (Exception e) {
             e.printStackTrace();
             return new JsonResult().setErrorMsg("保存失败");

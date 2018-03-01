@@ -14,7 +14,7 @@ public class Classmanagement {
 
     private DataDictionary college;
 
-    private Byte gradestate;
+    private Boolean gradestate;
 
     private Classroom room;
 

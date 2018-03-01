@@ -60,11 +60,11 @@
     left join classroom r on c.classroom_id = r.id
     left join employee e on c.employee_id = e.id
   </select>
-  <select id="queryCount" resultType="int" parameterType="cn.wolfcode.crm.query.QueryObjects">
+  <select id="queryCount" resultType="int">
     select count(id) from classmanagement
 
   </select>
-  <select id="queryList" resultMap="BaseResultMap" parameterType="cn.wolfcode.crm.query.QueryObjects">
+  <select id="queryList" resultMap="BaseResultMap">
     select c.id , c.gradeuser , c.studenquantity,d.name d_name,
     c.gradestate,
     r.name r_name,e.realname e_realname
