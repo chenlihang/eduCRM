@@ -23,7 +23,18 @@ $(function () {
                         return value?"部门存在":"<font color='red'>部门不存在</font>";
                     }}
             ]
-        ]
+        ],
+        onSelect:function (index, row) {
+            if (!row.state) {
+                $("#dismiss_btn").linkbutton({
+                    text:'恢复'
+                })
+            }else {
+                $("#dismiss_btn").linkbutton({
+                    text:'解散'
+                })
+            }
+        }
     });
 
     $("#dept_dialog").dialog({
@@ -46,6 +57,12 @@ function edit() {
         $.messager.alert("温馨提示","请选择一条数据",'warning');
         return;
     }
+    if (row.manager) {
+        row['manager.id'] = row.manager.id;
+    }
+    if (row.parent) {
+        row['parent.id'] = row.parent.id;
+    }
     //回显数据
     $("#dept_form").form('load',row);
     $("#dept_dialog").dialog('open');
@@ -54,15 +71,15 @@ function edit() {
 function reload() {
     $("#dept_datagrid").datagrid('reload');
 }
-function remove() {
+function dismiss() {
     var row = $("#dept_datagrid").datagrid('getSelected');
     if (!row) {
         $.messager.alert("温馨提示","请选中一条数据","warning");
         return;
     }
-    $.messager.confirm("确认对话框","您要解散该部门吗",function (r) {
+    $.messager.confirm("确认对话框","您确定要解散该部门吗",function (r) {
         if (r) {
-            $.get('/department/delete.do',{id:row.id},function (data) {
+            $.get('/department/dismiss.do',{id:row.id},function (data) {
                 if (data.success) {
                     $.messager.alert("温馨提示","解散成功",'info',function () {
                         //关闭弹出框然后刷新

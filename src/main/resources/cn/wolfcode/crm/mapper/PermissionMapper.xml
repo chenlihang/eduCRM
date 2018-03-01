@@ -26,11 +26,11 @@
     where id = #{id}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, name
+    select id, name,resource
     from permission
   </select>
 
-  <select id="selectByRoleId" resultType="permission">
+  <select id="selectByRoleId" resultType="cn.wolfcode.crm.domain.Permission">
     select p.id,p.name
     from permission p join role_permission rp on rp.permission_id=p.id
     where rp.role_id=#{roleId}
@@ -43,8 +43,8 @@
     select count(id) from permission
   </select>
 
-  <select id="queryList" resultType="permission">
-    select id, name from permission
-    limit #{startIndex},#{rows}
+  <select id="queryList" resultType="cn.wolfcode.crm.domain.Permission">
+    select id, name,resource from permission
+    limit #{start},#{pageSize}
   </select>
 </mapper>

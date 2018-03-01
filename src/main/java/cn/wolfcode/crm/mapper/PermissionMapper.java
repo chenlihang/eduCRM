@@ -3,6 +3,7 @@ package cn.wolfcode.crm.mapper;
 import cn.wolfcode.crm.domain.Permission;
 import cn.wolfcode.crm.domain.Permission;
 import cn.wolfcode.crm.query.QueryObject;
+import cn.wolfcode.crm.query.QueryObjects;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ public interface PermissionMapper {
 
     int updateByPrimaryKey(Permission entity);
 
-    int queryCount(QueryObject qo);
+    int queryCount(QueryObjects qo);
 
-    List<Permission> queryList(QueryObject qo);
+    List<Permission> queryList(QueryObjects qo);
 
     List<Permission> selectByRoleId(Long roleId);
 

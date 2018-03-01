@@ -12,7 +12,7 @@
     <div id="dept_toolbar">
         <a class="easyui-linkbutton" iconCls="icon-add" plain="true", onclick="add()">新增</a>
         <a class="easyui-linkbutton" iconCls="icon-edit" plain="true", onclick="edit()">编辑</a>
-        <a class="easyui-linkbutton" iconCls="icon-remove" plain="true",  onclick="remove()">解散</a>
+        <a class="easyui-linkbutton" iconCls="icon-remove" plain="true", id="dismiss_btn" onclick="dismiss()">解散</a>
         <a class="easyui-linkbutton" iconCls="icon-reload" plain="true", onclick="reload()">刷新</a>
     </div>
     <div id="dept_btns">
@@ -25,16 +25,16 @@
                 <input type="hidden" name="id"/>
                 <tr>
                     <td>部门编码:</td>
-                    <td><input name="sn" class="easyui-textbox"/></td>
+                    <td><input name="sn" class="easyui-textbox" prompt="请输入部门编码" required="true"/></td>
                 </tr>
                 <tr>
                     <td>部门名称:</td>
-                    <td><input name="name" class="easyui-textbox" prompt="请输入部门名称"/></td>
+                    <td><input name="name" class="easyui-textbox" prompt="请输入部门名称" required="true"/></td>
                 </tr>
                 <tr>
                     <td>部门经理:</td>
                     <td><input name="manager.id" class="easyui-combobox"
-                               data-options="valueField:'id',textField:'name',url:'/department/query.do',
+                               data-options="valueField:'id',textField:'realname',url:'/employee/listAll.do',
                         panelHeight:'auto'"/></td>
                 </tr>
                 <tr>

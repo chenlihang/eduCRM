@@ -18,8 +18,6 @@ import java.util.List;
 public class DepartmentController {
     @Autowired
     private IDepartmentService departmentService;
-    @Autowired
-    private IEmployeeService employeeService;
 
     @RequestMapping("view")
     @RequiresPermissions("department:view")
@@ -36,6 +34,8 @@ public class DepartmentController {
 
     @RequestMapping("saveOrUpdate")
     @ResponseBody
+    @RequiresPermissions("department:saveOrUpdate")
+    @PermissionName("部门新增或编辑")
     public JsonResult saveOrUpdate(Department department){
         JsonResult result = new JsonResult();
         try {
@@ -44,6 +44,20 @@ public class DepartmentController {
         }catch (Exception e){
             e.printStackTrace();
             return result.setErrorMsg("操作失败");
+        }
+    }
+    @RequestMapping("dismiss")
+    @ResponseBody
+    @RequiresPermissions("department:dismiss")
+    @PermissionName("部门解散")
+    public JsonResult dismiss(Long id){
+        JsonResult result = new JsonResult();
+        try {
+            departmentService.dismiss(id);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return result.setErrorMsg("解散失败");
         }
     }
 }
