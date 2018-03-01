@@ -21,7 +21,7 @@ public class Keyaccount  extends BaseDomain{
 
     private DataDictionaryItem college;
 
-    /*private Contact contact;*/
+    private Contact contact;
 
     private Employee marketer;
 
