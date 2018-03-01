@@ -49,6 +49,14 @@ public class EmployeeController {
         return employeeService.query(qo);
     }
 
+    @RequestMapping("input")
+    public String input(Long id,Model model) {
+        if (id != null) {
+            model.addAttribute("entity", employeeService.selectByPrimaryKey(id));
+        }
+        return "employee/input";
+    }
+
     @RequestMapping("listAll")
     @ResponseBody
     public List<Employee> listAll   () {

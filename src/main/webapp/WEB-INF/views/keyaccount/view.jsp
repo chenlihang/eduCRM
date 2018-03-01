@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
 <head>
@@ -16,6 +18,30 @@
     <title>大客户管理</title>
 </head>
 <body>
+<script type="text/javascript">
+    $(function () {
+
+
+        $(".edit").click(function () {
+            this;
+            
+        });
+        $(".search").click(function () {
+
+            $("#searchForm").submit();
+            
+        })
+        
+    });
+</script>
+<div class="modal fade" id="input" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-content modal-lg">
+    </div><!-- /.modal -->
+</div>
+
+
+
+
 
 
                 <div class="col-md-12">
@@ -34,7 +60,7 @@
                                     <div class="span2 col-lg-2">
                                         <div class=" input-group input-group-sm">
                                             <span class="input-group-addon" >学校/地址</span>
-                                            <input type="text" name="keyword" class="form-control" >
+                                            <input type="text" name="keyword" value="${qo.keyword}" class="form-control" >
                                         </div>
                                     </div>
                                     <div class="span2 col-lg-2">
@@ -42,18 +68,27 @@
                                             <span class="input-group-addon" >意向学科</span>
                                             <select name="subjectId" class="form-control">
                                                 <option value="-1">请选择</option>
+                                                <c:forEach items="${subjects}" var="obj" >
+                                                    <option value="${obj.id}">${obj.name}</option>
+                                                </c:forEach>
 
                                             </select>
 
                                         </div>
+                                        <script type="text/javascript">
+                                            $("[name=subjectId] option[value=${qo.subjectId}]").prop("selected",1);
+
+                                        </script>
                                     </div>
                                     <div>
-                                        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>新增</a>
-                                        <a href="#" class="btn btn-default"><i class="fa fa-edit"></i>编辑</a>
-                                        <a href="#" class="btn btn-default"><i class="fa fa-minus"></i>删除</a>
-                                        <a href="#" class="btn btn-default"><i class="fa fa-search"></i>查询</a>
-                                        <a href="#" class="btn btn-default"><i class="fa fa-ellipsis-h"></i>更多</a>
-                                    </div>
+                                        <a href="/keyaccount/input.do" class="btn btn-default " data-toggle="modal" data-target="#input"><i class="fa fa-plus"></i>新增</a>
+                                        <a href="/keyaccount/input.do" class="btn btn-default " data-toggle="modal" data-target="#input"><i class="fa fa-edit"></i>编辑</a>
+                                        <a href="#" class="btn btn-default delete" data-url="/keyaccount/delete.do"><i class="fa fa-minus"></i>删除</a>
+                                        <a href="#" class="btn btn-default search"><i class="fa fa-search"></i>查询</a>
+                                        <a href="#" class="btn btn-default " data-toggle="modal" data-target="#myModal"><i class="fa fa-ellipsis-h"></i>更多</a>
+
+                                        </div>
+
                                 </div>
                             </div>
                             <br>
@@ -66,9 +101,11 @@
 
 
 
+
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+
                                     <td>序号</td>
                                     <td>学校名</td>
                                     <td >地址</td>
@@ -76,12 +113,15 @@
                                     <td >意向程度</td>
                                     <td >学校电话</td>
                                     <td >学科</td>
+                                    <td >联系人</td>
                                     <td>营销人员</td>
                                     <td>跟进人员</td>
                                     <td>上一次跟进日期</td>
                                     <td>下一次跟进日期</td>
                                     <td>跟进状态</td>
                                     <td>顾客状态</td>
+                                    <td>更多操作</td>
+
 
                                 </tr>
                                 </thead>
@@ -89,6 +129,7 @@
                                 <c:forEach items="${result.data}" var="ele" varStatus="num">
 
                                     <tr role="row" class=${num.count%2==0?'odd':'even'}>
+                                        <input type="hidden" value="${ele.id}">
                                         <td class="sorting_1">${num.count}</td>
                                         <td>${ele.name}</td>
                                         <td>${ele.address}</td>
@@ -96,11 +137,14 @@
                                         <td>${ele.intentionLevel.name}</td>
                                         <td>${ele.schoolTel}</td>
                                         <td>${ele.subject.name}</td>
-                                            <%--<td>${ele.contact.name}</td>--%>
+                                        <td>${ele.contact.name}</td>
                                         <td>${ele.marketer.realname}</td>
                                         <td>${ele.tracer.realname}</td>
-                                        <td>${ele.prevTranceTime}</td>
-                                        <td>${ele.nextTranceTime}</td>
+                                        <fmt:formatDate value="${ele.prevTranceTime}" pattern="yyyy-MM-dd" var="prevTranceTime"/>
+                                        <td>${prevTranceTime}</td>
+                                        <fmt:formatDate value="${ele.nextTranceTime}" pattern="yyyy-MM-dd" var="$nextTranceTime"/>
+                                        <td>${$nextTranceTime}</td>
+
                                         <c:choose>
 
                                             <c:when test="${ele.traceState==true}">
@@ -134,6 +178,8 @@
 
                                         </c:otherwise>
                                         </c:choose>
+                                        <td><a href="/employee/saveOrUpdate.do?id=${ele.id}">编辑</a>||
+                                            <a href="/employee/delete.do?id=${ele.id}">删除</a></td>
 
 
 

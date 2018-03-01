@@ -1,5 +1,6 @@
 package cn.wolfcode.crm.service;
 
+import cn.wolfcode.crm.domain.DataDictionaryItem;
 import cn.wolfcode.crm.domain.Keyaccount;
 import cn.wolfcode.crm.query.QueryObjects;
 import cn.wolfcode.crm.util.PageResults;
@@ -22,6 +23,8 @@ public interface IKeyaccountService {
     int updateByPrimaryKey(Keyaccount entity);
 
     PageResults query(QueryObjects qo);
+
+    List<DataDictionaryItem> selectDictionaryItemByDictionarySn(String sn);
 
 
 }

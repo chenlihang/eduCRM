@@ -14,6 +14,16 @@ $(function () {
         $("input[name='currentPage']").val(1);
         $("#searchForm").submit();
     });
+
+
+    $('.date-picker').daterangepicker({
+        singleDatePicker: true,
+        format: 'YYYY-MM-DD'
+    }, function (start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+    });
+
+
 });
 
 $(".btn_delete").click(function () {
