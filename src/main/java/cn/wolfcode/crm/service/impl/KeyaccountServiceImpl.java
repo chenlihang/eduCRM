@@ -1,5 +1,6 @@
 package cn.wolfcode.crm.service.impl;
 
+import cn.wolfcode.crm.domain.DataDictionaryItem;
 import cn.wolfcode.crm.domain.Keyaccount;
 import cn.wolfcode.crm.mapper.KeyaccountMapper;
 import cn.wolfcode.crm.query.QueryObjects;
@@ -17,6 +18,7 @@ public class KeyaccountServiceImpl implements IKeyaccountService {
 
     @Override
     public int deleteByPrimaryKey(Long id) {
+
         return keyaccountMapper.deleteByPrimaryKey(id);
     }
 
@@ -59,6 +61,11 @@ public class KeyaccountServiceImpl implements IKeyaccountService {
         int pageSize=qo.getPageSize();
         List <Keyaccount> list = keyaccountMapper.queryList(qo);
         return new PageResults( currentPage,  pageSize,  list, totalcount);
+    }
+
+    @Override
+    public List<DataDictionaryItem> selectDictionaryItemByDictionarySn(String sn) {
+        return keyaccountMapper.selectDictionaryItemByDictionarySn(sn);
     }
 
 
