@@ -21,4 +21,6 @@ public interface DepartmentMapper {
     List<Department> queryList(QueryObject qo);
 
     Department selectByName(String name);
+
+    void dismiss(Long id);
 }

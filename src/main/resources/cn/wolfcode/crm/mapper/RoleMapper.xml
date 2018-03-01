@@ -44,7 +44,7 @@
   </select>
   <select id="queryList" resultMap="BaseResultMap">
     select id, name, sn from role
-    limit #{startIndex},#{rows}
+    limit #{start},#{pageSize}
   </select>
   <select id="selectByEmployeeId" resultType="long">
     select r.id from role r join employee_role er on r.id=er.role_id where er.employee_id=#{employeeId}
