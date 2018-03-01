@@ -27,8 +27,9 @@
                                 $("#dialog_content").html("删除成功");
 
                                 $(".dialog_info").modal('toggle');
-
-                                /* window.location.reload();*/
+                                $(".btn_close").click(function () {
+                                    window.location.reload();
+                                });
                             }
                         },"json");
                     });

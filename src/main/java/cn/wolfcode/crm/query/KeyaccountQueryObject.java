@@ -8,4 +8,9 @@ public class KeyaccountQueryObject extends QueryObjects{
     private String keyword;
     private Long subjectId=-1L;
 
+    public String getKeyword()
+    {
+        return this.keyword.length()==0||this.keyword==null?null:this.keyword;
+    }
+
 }

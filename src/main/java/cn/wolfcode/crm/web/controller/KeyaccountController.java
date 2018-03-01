@@ -3,6 +3,7 @@ package cn.wolfcode.crm.web.controller;
 import cn.wolfcode.crm.domain.Keyaccount;
 import cn.wolfcode.crm.query.KeyaccountQueryObject;
 import cn.wolfcode.crm.service.IContactService;
+import cn.wolfcode.crm.service.IEmployeeService;
 import cn.wolfcode.crm.service.IKeyaccountService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PageResults;
@@ -24,6 +25,8 @@ public class KeyaccountController {
     private IKeyaccountService keyaccountService;
     @Autowired
     private IContactService contactService;
+    @Autowired
+    private IEmployeeService employeeService;
 
     @RequestMapping("view")
     @RequiresPermissions("keyaccount:view")
@@ -67,6 +70,7 @@ public class KeyaccountController {
     {
 
         if (id != null) {
+        System.out.println("到达");
             Keyaccount enity = keyaccountService.selectByPrimaryKey(id);
             model.addAttribute("enity", enity);
         }
@@ -75,10 +79,10 @@ public class KeyaccountController {
         model.addAttribute("subject",keyaccountService.selectDictionaryItemByDictionarySn("subject"));
         model.addAttribute("college",keyaccountService.selectDictionaryItemByDictionarySn("college"));
         model.addAttribute("contact",contactService.selectAll());
-        model.addAttribute("marketer",keyaccountService.selectDictionaryItemByDictionarySn("marketer"));
-        model.addAttribute("tracer",keyaccountService.selectDictionaryItemByDictionarySn("tracer"));
+        model.addAttribute("marketer",employeeService.selectAll());
+        model.addAttribute("tracer",employeeService.selectAll());
         model.addAttribute("type",keyaccountService.selectDictionaryItemByDictionarySn("type"));
-        model.addAttribute("education",keyaccountService.selectDictionaryItemByDictionarySn("education"));
+        model.addAttribute("educate",keyaccountService.selectDictionaryItemByDictionarySn("educate"));
         return "keyaccount/input";
 
 
@@ -87,9 +91,9 @@ public class KeyaccountController {
 
     @RequestMapping("saveOrUpdate")
     @ResponseBody
-    public JsonResult saveOrUpdate(Keyaccount enitiy) {
+    public JsonResult saveOrUpdate(Keyaccount enity) {
 
-        if(keyaccountService.saveOrUpdate(enitiy)>0)
+        if(keyaccountService.saveOrUpdate(enity)>0)
         {
             return new JsonResult();
         }

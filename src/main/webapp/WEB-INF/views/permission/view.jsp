@@ -32,10 +32,10 @@
                 showDialog("需加载很久，确定加载吗？",function () {
                     //发送ajax请求访问加载权限的方法
                     $.get(url,function (data) {
-                        if (data.success){
-                            showDialog("加载成功",function () {
-                                location.reload();
-                            });
+                                if (data.success){
+                                    showDialog("加载成功",function () {
+                                        location.reload();
+                                    });
                         }
                     });
                 },true);

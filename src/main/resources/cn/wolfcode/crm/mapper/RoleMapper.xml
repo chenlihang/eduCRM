@@ -5,6 +5,9 @@
     <id column="id" property="id" />
     <result column="name" property="name" />
     <result column="sn" property="sn" />
+    <collection property="permissions" column="id"
+                select="cn.wolfcode.crm.mapper.PermissionMapper.selectByRoleId"/>
+
   </resultMap>
   <delete id="deleteByPrimaryKey">
     delete from role
@@ -14,14 +17,12 @@
     delete from role_permission where role_id=#{id}
   </delete>
   <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-    insert into role (name, sn)
+    insert into role (name, sn, permission)
     values (#{name}, #{sn})
   </insert>
   <insert id="insertPermissionRelation">
-    insert into role_permission (role_id,permission_id) values
-    <foreach collection="permissions" item="ele" separator="," >
-      (#{roleId},#{ele.id})
-    </foreach>
+    insert into role_permission (role_id,permission_id)
+    values (#{roleId},#{permissionId})
   </insert>
   <update id="updateByPrimaryKey">
     update role

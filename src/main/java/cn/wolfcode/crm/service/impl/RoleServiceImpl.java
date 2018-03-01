@@ -28,15 +28,17 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public void saveOrUpdate(Role entity) {
+    public void saveOrUpdate(Role entity,Long[] ids) {
         if (entity.getId() == null) {
             mapper.insert(entity);
         } else {
             mapper.deletePermissionRelation(entity.getId());
             mapper.updateByPrimaryKey(entity);
         }
-        if (entity.getPermissions().size()>0) {
-            mapper.insertPermissionRelation(entity.getId(),entity.getPermissions());
+        if(ids != null){
+            for (Long id : ids) {
+                mapper.insertPermissionRelation(entity.getId(),id);
+            }
         }
     }
 

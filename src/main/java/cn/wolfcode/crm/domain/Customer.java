@@ -48,15 +48,9 @@ public class Customer extends BaseDomain {
      */
     private String email;
 
-    /**
-     * 省份
-     */
-    private Integer province;
 
-    /**
-     * 学历
-     */
-    private Integer diplomas;
+
+
 
     /**
      * 专业
@@ -97,45 +91,13 @@ public class Customer extends BaseDomain {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inputTime;
 
-    /**
-     * 客户来源
-     */
-    private Integer source;
 
     /**
      * 合作高校
      */
     private Long collegeClient;
 
-    /**
-     * 客户类型
-     */
-    private Integer clientType;
 
-    /**
-     * 意向校区
-     */
-    private Integer intentionCampus;
-
-    /**
-     * 意向学科
-     */
-    private Integer intentionSubject;
-
-    /**
-     * 意向班级
-     */
-    private Integer intentionClass;
-
-    /**
-     * 意向程度
-     */
-    private Boolean intentionExtent;
-
-    /**
-     * 当前状态
-     */
-    private Integer state;
 
     /**
      * 携带电脑
@@ -158,4 +120,56 @@ public class Customer extends BaseDomain {
      * 备注
      */
     private String remark;
+
+    //////-----------------------------------------------------/////////////////////////////////
+    /**
+     * 学历
+     */
+    private Integer diplomas;
+    /**
+     * 省份
+     */
+    private DataDictionaryItem province;
+
+
+    /**
+     * 客户来源
+     */
+    private DataDictionaryItem source;
+
+    /**
+     * 客户类型
+     */
+    private DataDictionaryItem clientType;
+
+    /**
+     * 意向校区
+     */
+    private DataDictionaryItem intentionCampus;
+
+    /**
+     * 意向学科
+     */
+    private DataDictionaryItem intentionSubject;
+
+    /**
+     * 意向班级
+     */
+    private DataDictionaryItem intentionClass;
+
+    /**
+     * 意向程度
+     */
+    private DataDictionaryItem intentionExtent;
+
+    /**
+     * 当前状态
+     */
+    private DataDictionaryItem state;
+
+
+
+
+
+
 }

@@ -2,6 +2,7 @@ package cn.wolfcode.crm.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -26,9 +27,9 @@ public class Keyaccount  extends BaseDomain{
     private Employee marketer;
 
     private Employee tracer;
-
+   @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date prevTranceTime;
-
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date nextTranceTime;
 
     private boolean traceState;

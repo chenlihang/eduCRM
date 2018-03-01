@@ -37,19 +37,25 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
+	<bean id="systemLogUtil" class="cn.wolfcode.crm.util.SystemLogUtil"></bean>
+
 	<tx:advice id="txAdvice" transaction-manager="tx">
 		<tx:attributes>
-			<tx:method name="get*" read-only="true"/>
-			<tx:method name="select*" read-only="true"/>
-			<tx:method name="query*" read-only="true"/>
-			<tx:method name="list*" read-only="true"/>
-			<tx:method name="*"/>
+			<tx:method name="get*" read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="select*" read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="query*" read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="list*" read-only="true" propagation="SUPPORTS"/>
+			<tx:method name="*" propagation="REQUIRED"/>
 		</tx:attributes>
 	</tx:advice>
 
 	<aop:config>
 		<aop:pointcut id="pc" expression="execution(* cn.wolfcode.crm.service.impl.*ServiceImpl.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pc"/>
+		<!--记录日志-->
+		<aop:aspect ref="systemLogUtil">
+			<aop:after method="writeLog" pointcut-ref="pc"></aop:after>
+		</aop:aspect>
 	</aop:config>
 
 	<context:component-scan base-package="cn.wolfcode.crm"/>
