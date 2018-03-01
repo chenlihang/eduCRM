@@ -17,7 +17,6 @@
     <script>
         $(function () {
             $("#customerSubmit").click(function () {
-
                 $("#editForm").ajaxSubmit(function (data) {
                    if(data.success){
                        showDialog("操作成功",function () {
