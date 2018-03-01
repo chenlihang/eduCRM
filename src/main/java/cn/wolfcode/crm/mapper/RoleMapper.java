@@ -25,7 +25,7 @@ public interface RoleMapper {
 
     void deletePermissionRelation(Long id);
 
-    void insertPermissionRelation(@Param("roleId") Long id, @Param("permissions") List<Permission> permissions);
+    void insertPermissionRelation(@Param("roleId") Long id, @Param("permissionId") Long permissionId);
 
     List<Long> selectByEmployeeId(Long employeeId);
 }
