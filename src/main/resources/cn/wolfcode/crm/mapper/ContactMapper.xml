@@ -44,12 +44,12 @@
     where id = #{id}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap">
-    SELECT c.id,c.gander,c.birthday,k.id k_id,k.name k_name,c.dept,c.duty,c.qq,c.email,c.main
+    SELECT c.id,c.name,c.gander,c.birthday,k.id k_id,k.name k_name,c.dept,c.duty,c.qq,c.email,c.main,c.intro
     from contact c LEFT JOIN keyaccount k on c.keyaccount_id=k.id
     where c.id = #{id}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    SELECT c.id, c.gander, c.birthday,k.id k_id,k.name k_name,c.dept, c.duty,c.qq, c.email, c.main
+    SELECT c.id,c.name, c.gander, c.birthday,k.id k_id,k.name k_name,c.dept, c.duty,c.qq, c.email, c.main,c.intro
     from contact c LEFT JOIN keyaccount k on c.keyaccount_id=k.id
   </select>
     <select id="queryCount" resultType="int">
