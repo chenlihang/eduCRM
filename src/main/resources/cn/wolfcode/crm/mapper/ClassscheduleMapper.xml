@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.crm.mapper.ClassscheduleMapper">
+  <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.Classschedule">
+    <id column="id" property="id" />
+    <result column="time" property="time" />
+    <result column="week" property="week" />
+    <result column="charge" property="charge" />
+    <result column="attendacher" property="attendacher" />
+    <result column="coursename" property="coursename" />
+    <result column="remark" property="remark" />
+    <result column="state" property="state" />
+     <association property="classroom" javaType="classroom" columnPrefix="r_">
+    <id column="id" property="id"/>
+    <result column="name" property="name"/>
+  </association>
+     <association property="grade" javaType="Classmanagement" columnPrefix="m_">
+    <id column="id" property="id"/>
+    <result column="gradeuser" property="gradeuser"/>
+  </association>
+
+  </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+
+    select c.id,c.time,c.week,m.gradeuser m_gradeuser,c.coursename,c.charge,c.attendacher,
+    r.name r_name,c.remark,c.state
+    from classschedule c left join classmanagement m on c.grade_id=m.id
+    left join classroom r on c.classroom_id = r.id
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+
+    select c.id,c.time,c.week,m.gradeuser m_gradeuser,c.coursename,c.charge,c.attendacher,
+    r.name r_name,c.remark,c.state
+    from classschedule c left join classmanagement m on c.grade_id=m.id
+    left join classroom r on c.classroom_id = r.id
+  </select>
+  <select id="queryCount" resultType="int" parameterType="cn.wolfcode.crm.query.QueryObjects">
+    select count(id) from classschedule
+    <include refid="base_where"/>
+
+  </select>
+  <select id="queryList" resultMap="BaseResultMap" parameterType="cn.wolfcode.crm.query.QueryObjects">
+
+    select c.id,c.time,c.week,m.gradeuser m_gradeuser,c.coursename,c.charge,c.attendacher,
+    r.name r_name,c.remark,c.state
+    from classschedule c left join classmanagement m on c.grade_id=m.id
+    left join classroom r on c.classroom_id = r.id
+    <!--<include refid="base_where"/>-->
+    limit #{start},#{pageSize}
+  </select>
+
+  <sql id="base_where">
+    <where>
+      <if test="keyword != null and keyword != ''">
+        and (name like grade('%',#{keyword},'%') or classroom like concat('%',#{keyword},'%')
+        or attendcher like concat ('%',#{keyword},'%'))
+      </if>
+      <if test="beginDate != null">
+        and e.inputTime &gt;= #{beginDate}
+      </if>
+      <if test="endDate != null">
+        and e.inputTime &lt;= #{endDate}
+      </if>
+
+
+    </where>
+  </sql>
+</mapper>

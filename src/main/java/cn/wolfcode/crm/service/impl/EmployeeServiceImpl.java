@@ -49,6 +49,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
+    public List<Employee> selectEmployeeByDepartmentSn(String sn) {
+        return mapper.selectEmployeeByDepartmentSn(sn);
+    }
+
+    @Override
     public int updateByPrimaryKey(Employee entity) {
         return mapper.updateByPrimaryKey(entity);
     }

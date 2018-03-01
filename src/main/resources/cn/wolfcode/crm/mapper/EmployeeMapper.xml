@@ -86,6 +86,10 @@
         join role r on r.id=er.role_id
         where er.employee_id=#{employeeId}
     </select>
+    <select id="selectEmployeeByDepartmentSn" resultType="employee">
+        select name,id from employee where dept_id = (select id from department where sn=${sn})
+
+    </select>
 
     <sql id="base_where">
         <where>
