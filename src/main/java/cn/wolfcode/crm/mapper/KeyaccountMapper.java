@@ -1,5 +1,6 @@
 package cn.wolfcode.crm.mapper;
 
+import cn.wolfcode.crm.domain.DataDictionaryItem;
 import cn.wolfcode.crm.domain.Keyaccount;
 import cn.wolfcode.crm.query.QueryObjects;
 
@@ -19,4 +20,8 @@ public interface KeyaccountMapper {
     int queryCount(QueryObjects qo);
 
     List<Keyaccount> queryList(QueryObjects qo);
+
+    List<DataDictionaryItem> selectItemByDictionarySn(String sn);
+
+    List<DataDictionaryItem> selectDictionaryItemByDictionarySn(String sn);
 }

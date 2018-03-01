@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter@Setter
 public class KeyaccountQueryObject extends QueryObjects{
     private String keyword;
-    private Long subjectId;
+    private Long subjectId=-1L;
 
 }
