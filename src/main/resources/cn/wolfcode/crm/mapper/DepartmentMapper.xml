@@ -3,42 +3,50 @@
 <mapper namespace="cn.wolfcode.crm.mapper.DepartmentMapper">
   <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.Department">
     <id column="id" property="id" />
-    <result column="name" property="name" />
     <result column="sn" property="sn" />
+    <result column="name" property="name" />
     <result column="state" property="state" />
+    <association property="manager" column="manager_id"
+                 select="cn.wolfcode.crm.mapper.EmployeeMapper.selectByPrimaryKey" javaType="employee"></association>
+    <association property="parent" column="parent_id" select="selectByPrimaryKey"></association>
   </resultMap>
   <delete id="deleteByPrimaryKey">
     delete from department
     where id = #{id}
   </delete>
   <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-    insert into department (name, sn, state)
-    values (#{name}, #{sn}, #{state})
+    insert into department (sn, name, state, manager_id, parent_id)
+    values (#{sn}, #{name}, #{manager.id}, #{parent.id})
   </insert>
   <update id="updateByPrimaryKey">
     update department
-    set name = #{name},
-      sn = #{sn},
-      state = #{state}
+    set sn = #{sn},
+      name = #{name},
+      manager_id = #{manager.id},
+      parent_id = #{parent.id}
     where id = #{id}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
-    select id, name, sn, state
+    <update id="dismiss">
+      update department set state = state^1 where id = #{id}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select id, sn, name, state, manager_id, parent_id
     from department
     where id = #{id}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, name, sn, state
+    select id, sn, name, state, manager_id, parent_id
     from department
   </select>
   <select id="queryCount" resultType="int">
     select count(id) from department
   </select>
   <select id="queryList" resultMap="BaseResultMap">
-    select id, name, sn, state from department
-    limit #{startIndex},#{rows}
+    select id, sn, name, state, manager_id, parent_id
+    from department
+    limit #{startIndex}, #{rows}
   </select>
-    <select id="selectByName" resultType="department">
-      select id,name from department where name=#{name}
-    </select>
+  <select id="selectByName" resultType="department">
+    select id,name from department where name = #{name}
+  </select>
 </mapper>

@@ -2,6 +2,7 @@ package cn.wolfcode.crm.web.controller;
 
 import cn.wolfcode.crm.domain.Department;
 import cn.wolfcode.crm.service.IDepartmentService;
+import cn.wolfcode.crm.service.IEmployeeService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PermissionName;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -25,15 +26,38 @@ public class DepartmentController {
         return "department/view";
     }
 
-    @RequestMapping("listAll")
+    @RequestMapping("query")
     @ResponseBody
-    public List<Department> list(){
+    public List<Department> query(){
         return departmentService.selectAll();
     }
 
     @RequestMapping("saveOrUpdate")
     @ResponseBody
+    @RequiresPermissions("department:saveOrUpdate")
+    @PermissionName("部门新增或编辑")
     public JsonResult saveOrUpdate(Department department){
-        return new JsonResult();
+        JsonResult result = new JsonResult();
+        try {
+            departmentService.saveOrUpdate(department);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return result.setErrorMsg("操作失败");
+        }
+    }
+    @RequestMapping("dismiss")
+    @ResponseBody
+    @RequiresPermissions("department:dismiss")
+    @PermissionName("部门解散")
+    public JsonResult dismiss(Long id){
+        JsonResult result = new JsonResult();
+        try {
+            departmentService.dismiss(id);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return result.setErrorMsg("解散失败");
+        }
     }
 }

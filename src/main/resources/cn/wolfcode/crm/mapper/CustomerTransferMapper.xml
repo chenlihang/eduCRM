@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.crm.mapper.CustomerTransferMapper">
+  <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.CustomerTransfer">
+    <id column="id" property="id" />
+    <result column="inputTime" property="inputTime" />
+    <association property="inputUser" javaType="employee" columnPrefix="inputUser_">
+      <id column="id" property="id" />
+      <result column="name" property="realname" />
+    </association>
+    <association property="newOwner" javaType="employee" columnPrefix="newOwner_">
+      <id column="id" property="id" />
+      <result column="name" property="realname" />
+    </association>
+    <association property="prevOwner" javaType="employee" columnPrefix="prevOwner_">
+      <id column="id" property="id" />
+      <result column="name" property="realname" />
+    </association>
+    <association property="customer" javaType="customer" columnPrefix="customer_">
+      <id column="id" property="id" />
+      <result column="name" property="name" />
+    </association>
+  </resultMap>
+  <delete id="deleteByPrimaryKey">
+    delete from customertransfer
+    where id = #{id}
+  </delete>
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    insert into customertransfer (customer_id, inputTime, inputUser_id, newOwner_id, prevOwner_id
+      )
+    values (#{customer_id}, #{inputTime}, #{inputUser_id}, #{newOwner_id}, #{prevOwner_id}
+      )
+  </insert>
+  <update id="updateByPrimaryKey">
+    update customertransfer
+    set customer_id = #{customer_id},
+      inputTime = #{inputTime},
+      inputUser_id = #{inputUser_id},
+      newOwner_id = #{newOwner_id},
+      prevOwner_id = #{prevOwner_id}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select id, customer_id, inputTime, inputUser_id, newOwner_id, prevOwner_id
+    from customertransfer
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, customer_id, inputTime, inputUser_id, newOwner_id, prevOwner_id
+    from customertransfer
+  </select>
+
+  <select id="queryCount" resultType="int">
+    select count(ct.id)
+    <include refid="base_table"/>
+    <include refid="base_where"/>
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    <include refid="base_column"/>
+    <include refid="base_table"/>
+    <include refid="base_where"/>
+    limit #{start}, #{pageSize}
+  </select>
+
+  <sql id="base_column">
+select ct.id ,ct.inputTime,c.`name` customer_name,inputUser.realname inputUser_name,newOwner.realname newOwner_name,prevOwner.realname prevOwner_name
+  </sql>
+
+  <sql id="base_table">
+    from customertransfer ct join customer c on ct.customer_id=c.id
+join employee inputUser on ct.inputUser_id=inputUser.id
+join employee newOwner on ct.newOwner_id=newOwner.id
+join employee prevOwner on ct.prevOwner_id=prevOwner.id
+  </sql>
+
+  <sql id="base_where">
+    <where>
+      <if test="keyword != null and keyword != ''">
+        and (c.name like concat('%',#{keyword},'%') or inputUser.realname like concat('%',#{keyword},'%'))
+      </if>
+      <if test="beginDate != null">
+        and ct.inputTime &gt;= #{beginDate}
+      </if>
+      <if test="endDate != null">
+        and ct.inputTime &lt;= #{endDate}
+      </if>
+    </where>
+  </sql>
+
+</mapper>

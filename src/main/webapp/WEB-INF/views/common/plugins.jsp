@@ -16,4 +16,7 @@
     <script src="/js/rickshaw/rickshaw.js"></script>
     <script src="/js/rickshaw/rickshaw-plugin.js"></script>--%>
 <script type="text/javascript" src="/js/moment/moment.min.js"></script>
+<script type="text/javascript" src="/js/jquery-form/ajaxForm.js"></script>
+<script type="text/javascript" src="/js/edu/common/artDialog/jquery.artDialog.js?skin=blue"></script>
+<script type="text/javascript" src="/js/date-range-picker/daterangepicker.js"></script>
 <script type="text/javascript" src="/js/edu/common/commonAll.js"></script>
