@@ -1,6 +1,7 @@
 package cn.wolfcode.crm.service;
 
 import cn.wolfcode.crm.domain.Customer;
+import cn.wolfcode.crm.domain.DataDictionary;
 import cn.wolfcode.crm.query.QueryObjects;
 import cn.wolfcode.crm.util.PageResults;
 
@@ -20,5 +21,7 @@ public interface ICustomerService {
     int updateByPrimaryKey(Customer entity);
 
     PageResults query(QueryObjects qo);
+
+    List<DataDictionary> getDataDictionaryItemList1();
 
 }

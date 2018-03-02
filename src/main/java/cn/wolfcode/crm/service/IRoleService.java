@@ -13,7 +13,7 @@ public interface IRoleService {
 
     int insert(Role entity);
 
-    void saveOrUpdate(Role entity);
+    void saveOrUpdate(Role entity,Long[] ids);
 
     Role selectByPrimaryKey(Long id);
 

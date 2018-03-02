@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.crm.mapper.DataDictionaryItemMapper">
+  <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.DataDictionaryItem">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="intro" property="intro" />
+    <association property="parent" javaType="DataDictionary" columnPrefix="p_">
+      <id column="id" property="id"/>
+      <result column="name" property="name"/>
+    </association>
+  </resultMap>
+  <delete id="deleteByPrimaryKey">
+    delete from datadictionaryitem
+    where id = #{id}
+  </delete>
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    insert into datadictionaryitem (parent_id, name, intro)
+    values (#{parent.id}, #{name}, #{intro})
+  </insert>
+  <update id="updateByPrimaryKey">
+    update datadictionaryitem
+    set parent_id = #{parent.id},
+      name = #{name},
+      intro = #{intro}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+     SELECT item.id, item.name, item.intro, p.id p_id, p.name p_name FROM datadictionaryitem item LEFT JOIN datadictionary p ON item.parent_id = p.id
+      where item.id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, parent_id, name, intro
+    from datadictionaryitem
+  </select>
+
+  <select id="queryCount" resultType="int">
+    SELECT count(item.id)
+    FROM datadictionaryitem item LEFT JOIN datadictionary p ON item.parent_id = p.id
+    <include refid="base_where"/>
+  </select>
+  <select id="queryList" resultMap="BaseResultMap">
+    SELECT item.id, item.name, item.intro, p.id p_id, p.name p_name FROM datadictionaryitem item LEFT JOIN datadictionary p ON item.parent_id = p.id
+    <include refid="base_where"/>
+    limit #{start},#{pageSize}
+  </select>
+
+  <!--通过DataDictionary编码查询item-->
+  <select id="selectItemByParentSn" resultMap="BaseResultMap">
+    SELECT item.id, item.name, item.intro, p.id p_id, p.name p_name FROM datadictionaryitem item LEFT JOIN datadictionary p ON item.parent_id = p.id
+    WHERE p.sn=#{sn}
+  </select>
+  <!--通过DataDictionary编码和item名称查询item-->
+  <select id="getItemByParentSnAndItemName" resultMap="BaseResultMap">
+    SELECT item.id,item.name,item.intro FROM datadictionaryitem item LEFT JOIN datadictionary dic ON item.parent_id = dic.id
+    WHERE sn=#{sn} AND item.name=#{name}
+  </select>
+  <!--删除子项-->
+  <delete id="deleteByParentId">
+    DELETE FROM datadictionaryitem WHERE parent_id=#{id}
+  </delete>
+
+  <sql id="base_where">
+    <where>
+      <if test="sn!=null and sn!=''">
+        and p.sn =#{sn}
+      </if>
+    </where>
+  </sql>
+</mapper>

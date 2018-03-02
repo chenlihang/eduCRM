@@ -4,6 +4,7 @@ import cn.wolfcode.crm.domain.Role;
 import cn.wolfcode.crm.query.EmployeeQueryObject;
 import cn.wolfcode.crm.query.QueryObject;
 import cn.wolfcode.crm.query.QueryObjects;
+import cn.wolfcode.crm.service.IPermissionService;
 import cn.wolfcode.crm.service.IRoleService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PageResult;
@@ -23,6 +24,9 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private IRoleService roleService;
+
+    @Autowired
+    private IPermissionService permissionService;
 
     @RequestMapping("view")
     @RequiresPermissions("role:view")
@@ -50,11 +54,20 @@ public class RoleController {
         return roleService.selectAll();
     }
 
+    @RequestMapping("input")
+    public String input(Long id,Model model) {
+        if (id != null) {
+            model.addAttribute("entity", roleService.selectByPrimaryKey(id));
+        }
+        model.addAttribute("permissions",permissionService.selectAll());
+        return "role/input";
+    }
+
     @RequestMapping("saveOrUpdate")
     @ResponseBody
-    public JsonResult saveOrUpdate(Role role){
+    public JsonResult saveOrUpdate(Role role,Long[] ids){
         try {
-            roleService.saveOrUpdate(role);
+            roleService.saveOrUpdate(role,ids);
         } catch (Exception e) {
             e.printStackTrace();
             return new JsonResult().setErrorMsg("保存失败");

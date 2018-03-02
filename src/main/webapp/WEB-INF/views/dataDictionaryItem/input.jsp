@@ -46,10 +46,14 @@
                     if (data.success) {
                         $("#dialog_content").html("操作成功");
                         $('.dialog_info').modal('toggle');
+                        $(".btn_close").click(function () {
+                            window.location.reload();
+                        });
                     }
                 });
+                });
             });
-        });
+
     </script>
 
 </form>

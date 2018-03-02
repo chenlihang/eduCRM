@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.crm.mapper.DataDictionaryMapper">
+  <resultMap id="BaseResultMap" type="cn.wolfcode.crm.domain.DataDictionary">
+    <id column="id" property="id" />
+    <result column="sn" property="sn" />
+    <result column="name" property="name" />
+    <result column="intro" property="intro" />
+    <collection property="items" ofType="DataDictionaryItem" columnPrefix="item_" >
+      <id column="id" property="id"/>
+      <result column="name" property="name"/>
+      <result column="intro" property="intro"/>
+    </collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey">
+    delete from datadictionary
+    where id = #{id}
+  </delete>
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    insert into datadictionary (sn, name, intro)
+    values (#{sn}, #{name}, #{intro})
+  </insert>
+  <update id="updateByPrimaryKey">
+    update datadictionary
+    set sn = #{sn},
+      name = #{name},
+      intro = #{intro}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select id, sn, name, intro
+    from datadictionary
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+     select d.id, d.sn, d.name, d.intro,
+item.id item_id,item.name
+ item_name,item.intro item_intro
+from
+datadictionary d left join datadictionaryItem item
+on d.id = item.parent_id
+  </select>
+  <select id="queryCount" resultType="int">
+    select count(id) from datadictionary
+  </select>
+  <select id="queryList" resultMap="BaseResultMap">
+    select id, sn, name, intro
+    from datadictionary
+   limit #{start},#{pageSize}
+  </select>
+</mapper>

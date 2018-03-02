@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../common/plugins.jsp"%>
-<form action="/customer/saveOrUpdate.do" method="post" id="editForm">
+<form action="#" method="post" id="editForm">
     <input type="hidden" name="id" value="${entity.id}">
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">×</font></font></span></button>
@@ -13,17 +13,17 @@
     <table style="margin-left: 50px">
         <tr>
             <td>&nbsp;&nbsp;姓名&nbsp;:&nbsp;</td>
-            <td><input type="text" name="name" value="${entity.name}"></td>
+            <td><input readonly type="text" name="name" value="${entity.name}"></td>
               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年龄&nbsp;:&nbsp;</td>
-              <td><input type="text" name="age" value="${entity.age}"></td>
+              <td><input readonly type="text" name="age" value="${entity.age}"></td>
               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别&nbsp;:&nbsp;</td>
               <td>
                   <table>
                       <tr>
                           <td style="padding-left:10px "> 男&nbsp;:&nbsp;</td>
-                          <td> <input type="radio" name="gender" id="gender0" value="0"></td>
+                          <td> <input readonly type="radio" name="gender" id="gender0" value="0"></td>
                           <td style="padding-left:10px">女&nbsp;:&nbsp;</td>
-                          <td><input type="radio" name="gender" id="gender1" value="1"></td>
+                          <td><input readonly type="radio" name="gender" id="gender1" value="1"></td>
 
                       </tr>
                   </table>
@@ -32,22 +32,22 @@
           <tr><td colspan="6">&nbsp;</td></tr>
           <tr>
               <td>&nbsp;&nbsp;电话&nbsp;:&nbsp;</td>
-              <td><input type="text" name="tel" value="${entity.tel}"></td>
+              <td><input readonly type="text" name="tel" value="${entity.tel}"></td>
               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QQ&nbsp;:&nbsp;</td>
-              <td><input type="text" name="QQ" value="${entity.QQ}"></td>
+              <td><input readonly type="text" name="QQ" value="${entity.QQ}"></td>
               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;微信&nbsp;:&nbsp;</td>
-              <td><input type="text" name="weChat" value="${entity.weChat}"></td>
+              <td><input readonly type="text" name="weChat" value="${entity.weChat}"></td>
           </tr>
           <tr>
               <td colspan="6">&nbsp;</td>
           </tr>
           <tr>
               <td>&nbsp;&nbsp;邮箱&nbsp;:&nbsp;</td>
-              <td><input type="text" name="email" value="${entity.email}"></td>
+              <td><input readonly type="text" name="email" value="${entity.email}"></td>
               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学校&nbsp;:&nbsp;</td>
-              <td><input type="text" name="school" value="${entity.school}"></td>
+              <td><input readonly type="text" name="school" value="${entity.school}"></td>
               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;专业&nbsp;:&nbsp;</td>
-              <td><input type="text" name="major" value="${entity.major}"></td>
+              <td><input readonly type="text" name="major" value="${entity.major}"></td>
           </tr>
           <tr>
               <td colspan="6">&nbsp;</td>
@@ -81,7 +81,7 @@
                <td>
                    <div class="input-group" style="width: 168px">
                        <fmt:formatDate value="${entity.graduateTime}" pattern="yyyy-MM-dd" var="graduateTime"/>
-                       <input type="text" class="form-control date-picker" name="graduateTime" value="${graduateTime}">
+                       <input readonly type="text" class="form-control date-picker" name="graduateTime" value="${graduateTime}">
                        <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span>
                    </div>
                </td>
@@ -92,7 +92,7 @@
         <tr>
              <td>&nbsp;&nbsp;工作年限&nbsp;:&nbsp;</td>
              <td>
-                 <input type="text" name="workSeniority" value="${entity.workSeniority}">
+                 <input readonly type="text" name="workSeniority" value="${entity.workSeniority}">
              </td>
              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户来源&nbsp;:&nbsp;</td>
              <td>
@@ -208,9 +208,9 @@
                  <table>
                      <tr>
                          <td style="padding-left:10px"> 是&nbsp;:&nbsp;</td>
-                         <td> <input type="radio" id="computer1" name="computer" value="1"></td>
+                         <td> <input readonly type="radio" id="computer1" name="computer" value="1"></td>
                          <td style="padding-left:10px">否&nbsp;:&nbsp;</td>
-                         <td><input type="radio" id="computer0" name="computer" value="0"></td>
+                         <td><input readonly type="radio" id="computer0" name="computer" value="0"></td>
 
                      </tr>
                  </table>
@@ -226,7 +226,7 @@
          <tr>
              <td>&nbsp;&nbsp;关注问题&nbsp;:&nbsp;</td>
              <td colspan="5">
-                 <textarea name="concern" style="width: 100%">${entity.concern}</textarea>
+                 <textarea readonly name="concern" style="width: 100%">${entity.concern}</textarea>
              </td>
 
          </tr>
@@ -236,7 +236,7 @@
          <tr>
              <td>&nbsp;&nbsp;备注&nbsp;:&nbsp;</td>
              <td colspan="5">
-                 <textarea name="remark" style="width: 100%">${entity.remark}</textarea>
+                 <textarea readonly name="remark" style="width: 100%">${entity.remark}</textarea>
 
              </td>
 
@@ -291,6 +291,5 @@
 </font></font></div>
 <div class="modal-footer">
     <button type="button" class="btn btn-white" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关闭</font></font></button>
-    <button type="button" class="btn btn-default btn_datadictionary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;" id="customerSubmit" data-dismiss="modal">保存更改</font></font></button>
 </div>
 </form>
