@@ -19,7 +19,8 @@
   </insert>
   <update id="updateByPrimaryKey">
     update classroom
-    set name = #{name},
+    set
+    name = #{name},
       address = #{address},
       seats = #{seats},
       remark = #{remark},
@@ -41,7 +42,7 @@
 
     </select>
   <select id="queryList" resultType="classroom" parameterType="cn.wolfcode.crm.query.QueryObjects">
-    select name,address,seats,remark,state
+    select id,name,address,seats,remark,state
     from classroom
     <include refid="base_where"/>
     limit #{start},#{pageSize}

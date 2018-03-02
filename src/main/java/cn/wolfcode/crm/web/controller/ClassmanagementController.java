@@ -32,6 +32,13 @@ public class ClassmanagementController {
         return "classmanagement/view";
 
     }
+    @RequestMapping("input")
+    public String input(Long id,Model model) {
+        if (id != null) {
+            model.addAttribute("entity",classmanagementService.selectByPrimaryKey(id));
+        }
+        return "classmanagement/input";
+    }
 
     @RequestMapping("query")
     @ResponseBody

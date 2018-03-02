@@ -26,13 +26,15 @@ public class ClassroomServiceImpl implements IClassroomService {
     }
 
     @Override
-    public int saveOrUpdate(Classroom entity) {
+    public void saveOrUpdate(Classroom entity) {
         if (entity.getId() == null) {
              mapper.insert(entity);
-        }
-             mapper.updateByPrimaryKey(entity);
 
-        return 0;
+
+        }else{
+            mapper.updateByPrimaryKey(entity);
+        }
+
     }
 
     @Override
