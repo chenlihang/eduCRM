@@ -4,6 +4,7 @@ import cn.wolfcode.crm.domain.Customer;
 import cn.wolfcode.crm.query.CustomerQueryObject;
 import cn.wolfcode.crm.service.ICustomerService;
 import cn.wolfcode.crm.service.IDataDictionaryService;
+import cn.wolfcode.crm.service.IKeyaccountService;
 import cn.wolfcode.crm.util.JsonResult;
 import cn.wolfcode.crm.util.PermissionName;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,6 +22,8 @@ public class CustomerController {
     private ICustomerService customerService;
     @Autowired
     private IDataDictionaryService dataDictionaryService;
+    @Autowired
+    private IKeyaccountService keyaccountService;
     @RequestMapping("view")
     @RequiresPermissions("customer:view")
     @PermissionName("客户列表")
@@ -51,16 +54,25 @@ public class CustomerController {
     }
 
     @RequestMapping("input")
-    public String list(Model model, Long id,String sn) throws Exception {
+    public String input(Model model, Long id) throws Exception {
         if (id != null) {
             model.addAttribute("entity", customerService.selectByPrimaryKey(id));
         }
+        model.addAttribute("keyaccounts", keyaccountService.selectAll());
         model.addAttribute("dataItemList",dataDictionaryService.list());
         return "customer/input";
     }
 
 
-
+    @RequestMapping("show")
+    public String show(Model model, Long id) throws Exception {
+        if (id != null) {
+            model.addAttribute("entity", customerService.selectByPrimaryKey(id));
+        }
+        model.addAttribute("keyaccounts", keyaccountService.selectAll());
+        model.addAttribute("dataItemList",dataDictionaryService.list());
+        return "customer/show";
+    }
 
 
 

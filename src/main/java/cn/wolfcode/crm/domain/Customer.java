@@ -48,10 +48,6 @@ public class Customer extends BaseDomain {
      */
     private String email;
 
-
-
-
-
     /**
      * 专业
      */
@@ -74,15 +70,7 @@ public class Customer extends BaseDomain {
      */
     private Integer workSeniority;
 
-    /**
-     * 录入人_ID
-     */
-    private Long inputUser_id;
 
-    /**
-     * 销售员_ID
-     */
-    private Long salesman_id;
 
     /**
      * 录入时间
@@ -92,10 +80,7 @@ public class Customer extends BaseDomain {
     private Date inputTime;
 
 
-    /**
-     * 合作高校
-     */
-    private Long collegeClient;
+
 
 
 
@@ -125,7 +110,7 @@ public class Customer extends BaseDomain {
     /**
      * 学历
      */
-    private Integer diplomas;
+    private DataDictionaryItem diplomas;
     /**
      * 省份
      */
@@ -168,8 +153,21 @@ public class Customer extends BaseDomain {
     private DataDictionaryItem state;
 
 
+    /**
+     * 录入人_ID
+     */
+    private Employee inputUser;
+
+    /**
+     * 销售员_ID
+     */
+    private Employee salesman;
 
 
+    /**
+     * 合作高校
+     */
+    private Keyaccount collegeClient;
 
 
 }

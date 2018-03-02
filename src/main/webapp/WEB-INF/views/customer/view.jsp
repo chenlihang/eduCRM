@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -16,15 +17,23 @@
 
     <script>
         $(function () {
-          /*  $("#customerSubmit").click(function () {
-                $("#editForm").ajaxSubmit(function (data) {
-                   if(data.success){
-                       showDialog("操作成功",function () {
-                           window.location.href="/customer/view.do";
-                       })
-                   }
-                })
-            });*/
+            $(".btn_dictionarydelete").click(function () {
+                var url = $(this).data("url");
+                var a = $("#delcfmOverhaul").modal('toggle');
+                if(a) {
+                    $("#deleteHaulBtn").click(function () {
+                        $.get(url, function (data) {
+                            if (data.success) {
+                                $("#dialog_content").html("删除成功");
+                                $(".dialog_info").modal('toggle');
+                                $(".btn_close").click(function () {
+                                    window.location.reload();
+                                });
+                            }
+                        }, "json");
+                    });
+                }
+            });
 
             $(".btn_datadictionary").click(function () {
                 $("#editForm").ajaxSubmit(function (data) {
@@ -49,6 +58,31 @@
             });
 
 
+
+            /*查看开始*/
+            $(".btn_showPage").click(function () {
+                var url = $(this).data("url");
+                alert(url)
+                showDialog("你确定要批量删除",function () {
+                    var ids = $.map($(".acb:checked"),function (item) {
+                        return $(item).data("eid");
+                    });
+                    if(ids.length>0&&ids.length==1){
+                        $.post(url,{ids:ids},function (data) {
+                            if(data.success){
+                                showDialog("批量删除成功",function () {
+                                    window.location.reload();
+                                });
+                            }
+                        },"json");
+                    }else{
+                        showDialog("至少选中1条数据");
+                    }
+                },true);
+            });
+            /*查看结束*/
+
+
         });
     </script>
 </head>
@@ -66,8 +100,9 @@
 <form id="searchForm" action="/customer/view.do" method="post">
     <div>
         <a href="/customer/input.do" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i>新增</a>
-        <a href="#" class="btn btn-default"><i class="fa fa-edit"></i>编辑</a>
-        <a href="#" class="btn btn-default"><i class="fa fa-minus"></i>删除</a>
+       <%-- <a href="#" class="btn btn-default"><i class="fa fa-edit"></i>编辑</a>
+        <a href="#" class="btn btn-default"><i class="fa fa-minus"></i>删除</a>--%>
+        <a href="#" data-url="/customer/show.do" class="btn btn-default btn_showPage" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i>查看</a>
         <a href="#" class="btn btn-default"><i class="fa fa-search"></i>查询</a>
         <a href="#" class="btn btn-default"><i class="fa fa-ellipsis-h"></i>更多</a>
     </div>
@@ -85,18 +120,20 @@
                 <th>电话</th>
                 <th>邮箱</th>
                 <th>QQ</th>
-                <th>职业</th>
-                <th>收入水平</th>
+                <th>学校</th>
+                <th>意向程度</th>
                 <th>负责人</th>
                 <th>创建人</th>
                 <th>日期</th>
                 <th>状态</th>
+                <th>操作</td>
+            </tr>
             </thead>
             <tbody>
             <c:forEach items="${result.data}" var="entity" varStatus="num">
                 <tr>
                     <td class="text-center">
-                        <div class="checkbox margin-t-0"><input id="${entity.id}" type="checkbox"><label
+                        <div class="checkbox margin-t-0"><input id="${entity.id}" type="checkbox" class="acb" data-eid="${entity.id}"><label
                                 for="${entity.id}"></label></div>
                     </td>
                     <td class="text-center">${num.count}</td>
@@ -105,13 +142,24 @@
                     <td>${entity.tel}</td>
                     <td>${entity.email}</td>
                     <td>${entity.QQ}</td>
-                    <td>职业</td>
-                    <td>收入水平</td>
+                    <td>${entity.school}</td>
+                    <td>${entity.intentionExtent.name}</td>
                     <td>负责人</td>
-                    <td>创建人</td>
-                    <td>日期</td>
-                    <td>状态</td>
-
+                    <td>${entity.inputUser.realname}</td>
+                    <td><fmt:formatDate value="${entity.inputTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                    <td>
+                        <c:if test="${entity.state.name=='正式学员'}">
+                            <font color="green">${entity.state.name}</font>
+                        </c:if>
+                        <c:if test="${entity.state.name=='正常'}">
+                           ${entity.state.name}
+                        </c:if>
+                    </td>
+                    <td>
+                        <a href="/customer/input.do?id=${entity.id}" class="btn btn-default btn_dictionedit" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit"></i>编辑</a>
+                        <em style="display: block;padding-top: 3px"></em>
+                        <a href="javascript:;" style="width: 88px"  class="btn btn-default btn_dictionarydelete" data-url="/customer/delete.do?id=${entity.id}"><i class="fa fa-minus"></i>删除</a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

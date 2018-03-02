@@ -2,15 +2,18 @@ package cn.wolfcode.crm.service.impl;
 
 import cn.wolfcode.crm.domain.Customer;
 import cn.wolfcode.crm.domain.DataDictionary;
+import cn.wolfcode.crm.domain.Employee;
 import cn.wolfcode.crm.mapper.CustomerMapper;
-import cn.wolfcode.crm.mapper.DataDictionaryItemMapper;
 import cn.wolfcode.crm.mapper.DataDictionaryMapper;
 import cn.wolfcode.crm.query.QueryObjects;
 import cn.wolfcode.crm.service.ICustomerService;
 import cn.wolfcode.crm.util.PageResults;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,8 +22,7 @@ public class CustomerServiceImpl implements ICustomerService {
     private CustomerMapper mapper;
     @Autowired
     private DataDictionaryMapper dataDictionaryMapper;
-    @Autowired
-    private DataDictionaryItemMapper dataDictionaryItemMapper;
+
     @Override
     public int deleteByPrimaryKey(Long id) {
         return mapper.deleteByPrimaryKey(id);
@@ -34,6 +36,10 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public int saveOrUpdate(Customer entity) {
         if (entity.getId() == null) {
+            Subject subject = SecurityUtils.getSubject();
+            Employee employee = (Employee) subject.getPrincipal();
+            entity.setInputUser(employee);
+            entity.setInputTime(new Date());
             return mapper.insert(entity);
         } else {
             return mapper.updateByPrimaryKey(entity);

@@ -34,16 +34,6 @@
                         },"json");
                     });
                 }
-                /* $.get(url, function (data) {
-                     if (data.success) {
-                         /!*showDialog("删除成功", function () {
-                             window.location.reload();
-                         })*!/
-                         $("#dialog_content").html("删除成功");
-                         $('.dialog_info').modal('toggle');
-                     }
-                 }, "json");*/
-                /*}, true);*/
             });
             $(".btn_datadictionary").click(function () {
                 $("#editForm").ajaxSubmit(function (data) {
@@ -84,7 +74,7 @@
     <input type="hidden" name="sn" value="${qo.sn}">
 
     <div>
-        <a href="/dataDictionaryItem/input.do?sid=${param.sid}" class="btn btn-default btn_add_datadictionary" data-toggle="modal" data-target="#myModal3"><i class="fa fa-plus"></i>新增</a>
+        <a href="/dataDictionaryItem/input.do?sid=${param.sid}" class="btn btn-default" data-toggle="modal" data-target="#myModal3"><i class="fa fa-plus"></i>新增</a>
         <%--<a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal3"><i class="fa fa-edit"></i>编辑</a>
         <a href="#" class="btn btn-default"><i class="fa fa-minus"></i>删除</a>--%>
         <%--<a href="#" class="btn btn-default"><i class="fa fa-search"></i>查询</a>
