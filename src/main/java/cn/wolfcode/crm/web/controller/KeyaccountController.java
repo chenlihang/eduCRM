@@ -36,7 +36,9 @@ public class KeyaccountController {
         PageResults result = keyaccountService.query(qo);
 
         model.addAttribute("result", result);
-        model.addAttribute("subjects",keyaccountService.selectDictionaryItemByDictionarySn("subject"));
+        model.addAttribute("subjects", keyaccountService.selectDictionaryItemByDictionarySn("subject"));
+        model.addAttribute("marketers", employeeService.selectEmployeeByDepartmentSn("marketing"));
+
 
 
         return "keyaccount/view";
@@ -47,16 +49,13 @@ public class KeyaccountController {
     public List<Keyaccount> list() {
         return keyaccountService.selectAll();
     }
+
     @RequestMapping("delete")
     @ResponseBody
-    public Object delete(Long id)
-    {
-        if(keyaccountService.deleteByPrimaryKey(id)>0)
-        {
+    public Object delete(Long id) {
+        if (keyaccountService.deleteByPrimaryKey(id) > 0) {
             return new JsonResult();
-        }
-        else
-        {
+        } else {
 
             return new JsonResult().setErrorMsg("删除操作失败");
         }
@@ -70,22 +69,33 @@ public class KeyaccountController {
     {
 
         if (id != null) {
-        System.out.println("到达");
+            System.out.println("到达");
             Keyaccount enity = keyaccountService.selectByPrimaryKey(id);
             model.addAttribute("enity", enity);
         }
-        model.addAttribute("importance",keyaccountService.selectDictionaryItemByDictionarySn("importance"));
-        model.addAttribute("intentionLevel",keyaccountService.selectDictionaryItemByDictionarySn("intentionLevel"));
-        model.addAttribute("subject",keyaccountService.selectDictionaryItemByDictionarySn("subject"));
-        model.addAttribute("college",keyaccountService.selectDictionaryItemByDictionarySn("college"));
-        model.addAttribute("contact",contactService.selectAll());
-        model.addAttribute("marketer",employeeService.selectAll());
-        model.addAttribute("tracer",employeeService.selectAll());
-        model.addAttribute("type",keyaccountService.selectDictionaryItemByDictionarySn("type"));
-        model.addAttribute("educate",keyaccountService.selectDictionaryItemByDictionarySn("educate"));
+        model.addAttribute("importance", keyaccountService.selectDictionaryItemByDictionarySn("importance"));
+        model.addAttribute("intentionLevel", keyaccountService.selectDictionaryItemByDictionarySn("intentionLevel"));
+        model.addAttribute("subject", keyaccountService.selectDictionaryItemByDictionarySn("subject"));
+        model.addAttribute("college", keyaccountService.selectDictionaryItemByDictionarySn("college"));
+        model.addAttribute("contact", contactService.selectAll());
+        model.addAttribute("marketer", employeeService.selectAll());
+        model.addAttribute("tracer", employeeService.selectAll());
+        model.addAttribute("type", keyaccountService.selectDictionaryItemByDictionarySn("type"));
+        model.addAttribute("educate", keyaccountService.selectDictionaryItemByDictionarySn("educate"));
         return "keyaccount/input";
 
 
+    }
+    @RequiresPermissions("keyaccount:signContract")
+    @PermissionName("大客户改变合约状态")
+    @RequestMapping("signContract")
+    @ResponseBody
+    public Object signContract(Long id, boolean customerStatus) {
+        if (keyaccountService.signContract(id, customerStatus) > 0) {
+            return new JsonResult();
+        } else {
+            return new JsonResult().setErrorMsg("无法签约,请检查网络");
+        }
     }
 
 
@@ -93,16 +103,16 @@ public class KeyaccountController {
     @ResponseBody
     public JsonResult saveOrUpdate(Keyaccount enity) {
 
-        if(keyaccountService.saveOrUpdate(enity)>0)
-        {
+        if (keyaccountService.saveOrUpdate(enity) > 0) {
             return new JsonResult();
-        }
-        else
-        {
+        } else {
 
-        return new JsonResult().setErrorMsg("保存失败");
+            return new JsonResult().setErrorMsg("保存失败");
         }
 
 
     }
+
+
+
 }

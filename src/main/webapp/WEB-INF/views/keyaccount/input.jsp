@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Issac
@@ -95,6 +96,7 @@
 
             </select>
             </td>
+            <shiro:hasRole name="MarketingMgr">
             <td>&nbsp;跟进人员&nbsp;</td>
             <td><select name="tracer.id" class="selectpicker">
                 <option value="-1">请选择</option>
@@ -104,6 +106,19 @@
 
             </select>
             </td>
+            </shiro:hasRole>
+            <shiro:hasRole name="admin">
+                <td>&nbsp;跟进人员&nbsp;</td>
+                <td><select name="tracer.id" class="selectpicker">
+                    <option value="-1">请选择</option>
+                    <c:forEach items="${tracer}" var="obj">
+                        <option value="${obj.id}">${obj.realname}</option>
+                    </c:forEach>
+
+                </select>
+                </td>
+            </shiro:hasRole>
+
             <td>&nbsp;跟进状态&nbsp;</td>
             <td><select name="traceState" class="selectpicker">
                     <option value="false">未跟进</option>

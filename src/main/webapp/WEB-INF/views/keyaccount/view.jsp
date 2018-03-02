@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 
 <html>
 <head>
@@ -69,6 +70,7 @@
                                             <input type="text" name="keyword" value="${qo.keyword}" class="form-control" >
                                         </div>
                                     </div>
+
                                     <div class="span2 col-lg-2">
                                         <div class=" input-group input-group-sm">
                                             <span class="input-group-addon" >意向学科</span>
@@ -83,6 +85,38 @@
                                         </div>
                                         <script type="text/javascript">
                                             $("[name=subjectId] option[value=${qo.subjectId}]").prop("selected",1);
+
+                                        </script>
+                                    </div>
+                                    <div class="span2 col-lg-2">
+                                        <div class=" input-group input-group-sm">
+                                            <span class="input-group-addon" >营销人员</span>
+                                            <select name="marketerId" class="form-control">
+                                                <option value="-1">请选择</option>
+                                                <c:forEach items="${marketers}" var="obj" >
+                                                    <option value="${obj.id}">${obj.realname}</option>
+                                                </c:forEach>
+
+                                            </select>
+
+                                        </div>
+                                        <script type="text/javascript">
+                                            $("[name=marketerId] option[value=${qo.marketerId}]").prop("selected",1);
+
+                                        </script>
+                                    </div>
+                                    <div class="span2 col-lg-2">
+                                        <div class=" input-group input-group-sm">
+                                            <span class="input-group-addon" >状态</span>
+                                            <select name="traceStateCon" class="form-control">
+                                                <option value="">请选择</option>
+                                                <option value="true">已跟进</option>
+                                                <option value="false">未跟进</option>
+                                            </select>
+
+                                        </div>
+                                        <script type="text/javascript">
+                                            $("[name=traceStateCon] option[value=${qo.traceStateCon}]").prop("selected",1);
 
                                         </script>
                                     </div>
@@ -133,6 +167,7 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${result.data}" var="ele" varStatus="num">
+
 
                                     <tr role="row" class=${num.count%2==0?'odd':'even'}>
                                         <input type="hidden" value="${ele.id}">
@@ -185,7 +220,36 @@
                                         </c:otherwise>
                                         </c:choose>
                                         <td><a href="/keyaccount/input.do?id=${ele.id}" class="btn btn-default " data-toggle="modal" data-target="#input"><i class="fa fa-edit"></i>编辑</a>||
-                                            <a href="javascript:"  data-url="/keyaccount/delete.do?id=${ele.id}" class="btn btn-default delete" ><i class="fa fa-minus"></i>删除</a></td>
+                                            <a href="javascript:"  data-url="/keyaccount/delete.do?id=${ele.id}" class="btn btn-default delete" ><i class="fa fa-minus"></i>删除</a>
+
+                                            <shiro:hasPermission name="keyaccount:signContract">
+                                            ||<a href="javascript:"  data-url="/keyaccount/signContract.do?id=${ele.id}&customerStatus=${ele.customerStatus}" class="btn btn-default btn_signContract" ><i class="fa fa-minus"></i>
+                                       <c:choose>
+                                        <c:when test="${ele.customerStatus==true}">
+                                                解约
+                                        </c:when>
+                                           <c:otherwise>
+                                               签约
+                                           </c:otherwise>
+                                       </c:choose>
+                                                </a></shiro:hasPermission>
+
+
+                                    </td>
+                                        <script type="text/javascript">
+                                            $(".btn_signContract").click(function () {
+                                                var url=$(this).data("url");
+                                                $.get(url,function (data) {
+                                                    if(data.success)
+                                                    {
+                                                        window.location.reload();
+                                                    }
+
+                                                    
+                                                });
+                                                
+                                            })
+                                        </script>
 
 
 

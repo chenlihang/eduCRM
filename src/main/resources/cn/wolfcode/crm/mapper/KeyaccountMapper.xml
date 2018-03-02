@@ -144,6 +144,12 @@
        and k.subject_id =#{subjectId}
 
      </if>
+     <if test="marketerId>0">
+       and k.marketer_id=#{marketerId}
+     </if>
+     <if test="traceStateCon!=null">
+       and k.traceState =#{traceStateCon}
+     </if>
 
    </where>
   </sql>
@@ -199,6 +205,11 @@
       introduction = #{introduction},
       cooperation = #{cooperation,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateCustomerStatus" >
+    update keyaccount
+    set customerStatus=#{customerStatus}
+    where id=#{id}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <include refid="base_column"></include>

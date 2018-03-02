@@ -27,5 +27,5 @@ public interface IKeyaccountService {
     List<DataDictionaryItem> selectDictionaryItemByDictionarySn(String sn);
 
 
-
+    int signContract(Long id,boolean customerStatus);
 }

@@ -3,6 +3,7 @@ package cn.wolfcode.crm.mapper;
 import cn.wolfcode.crm.domain.DataDictionaryItem;
 import cn.wolfcode.crm.domain.Keyaccount;
 import cn.wolfcode.crm.query.QueryObjects;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface KeyaccountMapper {
     List<DataDictionaryItem> selectItemByDictionarySn(String sn);
 
     List<DataDictionaryItem> selectDictionaryItemByDictionarySn(String sn);
+
+    int updateCustomerStatus(@Param("id") Long id,@Param("customerStatus")boolean customerStatus);
 }
